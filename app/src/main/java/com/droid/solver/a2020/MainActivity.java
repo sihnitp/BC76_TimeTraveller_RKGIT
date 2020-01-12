@@ -2,10 +2,18 @@ package com.droid.solver.a2020;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.facebook.login.Login;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
@@ -30,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         tablayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(adapter);
         toolbar.inflateMenu(R.menu.toolbar_menu);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user==null){
+//            Menu menu=toolbar.getMenu();
+//            menu.getItem(R.id.login).setTitle("logout");
+//        }
         toolbar.setOnMenuItemClickListener(this);
     }
 
@@ -37,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.login:
-                showMessage("Login");
+                showMessage("login");
+                Intent intent=new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.feedback:
                 showMessage("Feedback");

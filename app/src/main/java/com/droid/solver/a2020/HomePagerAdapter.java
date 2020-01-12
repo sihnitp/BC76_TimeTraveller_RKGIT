@@ -35,6 +35,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         return fragmentNameList.get(position);
     }
 
+
     @Override
     public int getCount() {
         return fragmentList.size();

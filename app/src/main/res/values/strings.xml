@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">2020</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_application_id" translatable="false">513844805913776</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb513844805913776</string>
 
 </resources>
