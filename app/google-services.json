@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "379148718614",
+    "firebase_url": "https://sihnitp2020.firebaseio.com",
+    "project_id": "sihnitp2020",
+    "storage_bucket": "sihnitp2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379148718614:android:cf3f47842d7a6b32c25b37",
+        "android_client_info": {
+          "package_name": "com.droid.solver.a2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379148718614-ebg1ugrqrliofbpad59fgkrvd20da709.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.droid.solver.a2020",
+            "certificate_hash": "9ca79a42e0c96c6958cddc99e7b8dc8644f95493"
+          }
+        },
+        {
+          "client_id": "379148718614-211keeq2p8bcp23jnd093ubfma1a3mcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZWdCx8HdMwibPVi193XACPDKxVJGDP_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379148718614-211keeq2p8bcp23jnd093ubfma1a3mcp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
