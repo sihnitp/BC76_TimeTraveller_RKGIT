@@ -1,15 +1,20 @@
 package com.droid.solver.a2020;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.facebook.login.Login;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        invalidateOptionsMenu();
+        Log.i("TAG", "inside main");
     }
     private void init() {
         toolbar = findViewById(R.id.toolbar);
@@ -38,24 +45,53 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         tablayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(adapter);
         toolbar.inflateMenu(R.menu.toolbar_menu);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if(user==null){
-//            Menu menu=toolbar.getMenu();
-//            menu.getItem(R.id.login).setTitle("logout");
-//        }
+        setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+        @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        Log.i("TAG", "called");
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        MenuItem loginMenu=menu.findItem(R.id.login);
+
+        if(loginMenu!=null) {
+            if (user == null) {
+                loginMenu.setTitle("Login");
+            } else {
+                loginMenu.setTitle("Logout");
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
+
+    }
+
+
+
+
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
+
         switch (item.getItemId()){
             case R.id.login:
-                showMessage("login");
-                Intent intent=new Intent(this, LoginActivity.class);
-                startActivity(intent);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(user==null) {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    signOut();
+                }
                 break;
-            case R.id.feedback:
-                showMessage("Feedback");
+            case R.id.add_place:
+                startActivity(new Intent(this,AddPlacesActivity.class));
                 break;
             case R.id.about:
                 showMessage("About");
@@ -66,7 +102,18 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         }
         return false;
     }
+
     private void showMessage(String s){
         Toast.makeText(this,s+" is cilcked",Toast.LENGTH_SHORT ).show();
+    }
+
+    private void signOut(){
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(MainActivity.this, "Signed out", Toast.LENGTH_SHORT).show();
+                invalidateOptionsMenu();
+            }
+        });
     }
 }

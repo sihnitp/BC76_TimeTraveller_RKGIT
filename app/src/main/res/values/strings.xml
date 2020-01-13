@@ -3,5 +3,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_application_id" translatable="false">513844805913776</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb513844805913776</string>
+    <string name="temp">The Golghar or Gol Ghar (गोलघर), ("Round house") is a large granary located to the west of the Gandhi Maidan in Patna, capital of Bihar state, India.
+    The Golghar or Gol Ghar (गोलघर), ("Round house") is a large granary located to the west of the Gandhi Maidan in Patna, capital o
+        The Golghar or Gol Ghar (गोलघर), ("Round house") is a large granary located to the west of the Gandhi Maidan in Patna, capital o
+    </string>
+    <string name="about_city"><u>About City</u></string>
+    <string name="physical_artifacts"><u>Physical Artifacts</u></string>
+    <string name="practices"><u>Practices</u></string>
+    <string name="skills"><u>Culture/Skills</u></string>
+
 
 </resources>

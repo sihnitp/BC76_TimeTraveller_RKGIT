@@ -30,6 +30,7 @@ private int RC_SIGN_IN=101;
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false)
+                        .setLogo(R.drawable.logo)
                         .build(),
                 RC_SIGN_IN);
     }
@@ -41,17 +42,21 @@ private int RC_SIGN_IN=101;
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Intent intent=new Intent(this,MainActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(this, "sign in  failed ,"+response.getError().getMessage(), Toast.LENGTH_SHORT).show();
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
+                if(response!=null&&response.getError()!=null)
+                   Toast.makeText(this, "sign in  failed ,", Toast.LENGTH_SHORT).show();
+
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
+        super.onBackPressed();
     }
 }

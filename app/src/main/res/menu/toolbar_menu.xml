@@ -4,22 +4,22 @@
 <item
     android:title="Login"
     android:id="@+id/login"
-    android:orderInCategory="1"
+    android:orderInCategory="4"
     app:showAsAction="never"/>
     <item
-        android:title="Feedback"
-        android:id="@+id/feedback"
+        android:title="Add Place"
+        android:id="@+id/add_place"
         android:orderInCategory="1"
         app:showAsAction="never"/>
     <item
         android:title="about"
         android:id="@+id/about"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         app:showAsAction="never"/>
     <item
         android:title="Share this app"
         android:id="@+id/share"
-        android:orderInCategory="1"
+        android:orderInCategory="3"
         app:showAsAction="never"/>
 
 </menu>
