@@ -1,6 +1,5 @@
 package com.droid.solver.a2020;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.List;
@@ -11,49 +10,44 @@ public class RootModel {
     public RootModel(){
 
     }
+    public String state;
     public String cityName;
     public String cityImage;
-    public String description;
-    public Map<String,SkillModel> skillModelMap;
-    public Map<String,PracticesModel> practicesModelMap;
-    public Map<String,List<PhysicalArtifactsModel>> artifactsModelMap;
-    public Map<String,Feedback> feedbackMap;
+    public String cityDesctiption;
+    public String cityId;
+    public List<PhysicalArtifactsModel> physicalArtifactsModelList;
 
-    public RootModel(String cityName,
+    public String practicesImage;
+    public String practicesDescription;
+
+    public String skillImage;
+    public String skillDescription;
+
+
+    public RootModel(String state,String cityName,
                      String cityImage,
-                     String description,
-                     Map<String,SkillModel> skillModelMap,
-                     Map<String,PracticesModel> practicesModelMap,
-                     Map<String,List<PhysicalArtifactsModel>> artifactsModelMap,
-                     Map<String,Feedback> feedbackMap){
-
+                     String cityDesctiption,String cityId,
+                     List<PhysicalArtifactsModel> physicalArtifactsModelList,
+                     String practicesImage,
+                     String practicesDescription,
+                     String skillImage,
+                     String skillDescription
+                     ){
+        this.state=state;
         this.cityName=cityName;
         this.cityImage=cityImage;
-        this.description=description;
-        this.skillModelMap=skillModelMap;
-        this.practicesModelMap=practicesModelMap;
-        this.artifactsModelMap=artifactsModelMap;
-        this.feedbackMap=feedbackMap;
+        this.cityDesctiption=cityDesctiption;
+        this.cityId=cityId;
+        this.physicalArtifactsModelList=physicalArtifactsModelList;
+        this.practicesImage=practicesImage;
+        this.practicesDescription=practicesDescription;
+        this.skillImage=skillImage;
+        this.skillDescription=skillDescription;
+
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Map<String, Feedback> getFeedbackMap() {
-        return feedbackMap;
-    }
-
-    public Map<String, List<PhysicalArtifactsModel>> getArtifactsModelMap() {
-        return artifactsModelMap;
-    }
-
-    public Map<String, PracticesModel> getPracticesModelMap() {
-        return practicesModelMap;
-    }
-
-    public Map<String, SkillModel> getSkillModelMap() {
-        return skillModelMap;
+    public String getCityDesctiption() {
+        return cityDesctiption;
     }
 
     public String getCityImage() {
@@ -64,60 +58,35 @@ public class RootModel {
         return cityName;
     }
 
-}
-
-class SkillModel{
-    public String image;
-    public String description;
-    public SkillModel(){}
-    public SkillModel(String image,String description){
-        this.image=image;
-        this.description=description;
+    public String getCityId() {
+        return cityId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getState() {
+        return state;
     }
 
-    public String getImage() {
-        return image;
-    }
-}
-
-class PracticesModel{
-    public String image;
-    public String description;
-    public PracticesModel(){}
-    public PracticesModel(String image,String description){
-        this.image=image;
-        this.description=description;
+    public String getSkillDescription() {
+        return skillDescription;
     }
 
-    public String getImage() {
-        return image;
+    public String getPracticesImage() {
+        return practicesImage;
     }
 
-    public String getDescription() {
-        return description;
-    }
-}
-
-class PhysicalArtifactsModel{
-    public String image;
-    public String description;
-    public PhysicalArtifactsModel(){}
-    public  PhysicalArtifactsModel(String image,String description){
-        this.image=image;
-        this.description=description;
+    public List<PhysicalArtifactsModel> getPhysicalArtifactsModelList() {
+        return physicalArtifactsModelList;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPracticesDescription() {
+        return practicesDescription;
     }
 
-    public String getImage() {
-        return image;
+    public String getSkillImage() {
+        return skillImage;
     }
+
+
 }
 
 class Feedback{

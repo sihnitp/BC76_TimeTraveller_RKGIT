@@ -1,15 +1,8 @@
 package com.droid.solver.a2020;
 
-
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,31 +10,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
-
 import com.droid.solver.a2020.explore.ExploreActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.radiobutton.MaterialRadioButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ExploreFragment extends Fragment implements View.OnClickListener {
 
     private String [] state;
+
     private List<String[]> cityArrayList;
     private boolean isStateSelected=false;//default
     private int selectedStateIndex=0;//default
     private boolean isCitySelected=false;//default
     private int selectedCityIndex=0;//defaulttrue
+
     private ArrayAdapter<String> stateAdapter,cityAdapter;
     private AutoCompleteTextView stateAutoComplete,cityAutoComplete;
     private MaterialButton button;
@@ -52,6 +35,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
     public ExploreFragment() {
         cityArrayList=new ArrayList<>();
+        addCityArray();
         state=new String[]{
                 "andhra pradesh","arunachal pradesh","assam","bihar","chhattisgarh","goa","gujrat","haryana","himachal pradesh",
                 "jammu and kashmir","jharkhand","karnataka","kerela","madhya pradesh","maharashtra","manipur","meghalaya","mizoram",
@@ -59,7 +43,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
                 "west bengal","andaman and nicobar islands","chandigarh","dadar and nagar haveli","daman and diu","lakshadweep",
                 "delhi","pondicherry"
         };
-        addCityArray();
     }
 
     @Override
@@ -106,8 +89,13 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(isCitySelected&&isStateSelected){
-            startActivity(new Intent(getActivity(), ExploreActivity.class));
+        if(isCitySelected && isStateSelected){
+
+            Intent intent=new Intent(getActivity(),ExploreActivity.class);
+            intent.putExtra("state", state[selectedStateIndex]);
+            intent.putExtra("city",cityArrayList.get(selectedStateIndex)[selectedCityIndex]);
+            if(getActivity()!=null)
+               getActivity().startActivity(intent);
         }else{
 
             if(!isStateSelected) {
@@ -233,7 +221,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         }
         return temp;
     }
-
 
 
 }

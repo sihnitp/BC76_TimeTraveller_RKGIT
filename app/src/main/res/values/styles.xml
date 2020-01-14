@@ -6,5 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorSecondary">@color/white</item>
     </style>
-
+    <style name="progress_dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@android:color/black</item>
+    </style>
 </resources>

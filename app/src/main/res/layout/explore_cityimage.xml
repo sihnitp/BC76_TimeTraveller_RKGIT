@@ -3,9 +3,13 @@
     android:id="@+id/card_view"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
+    android:foreground="?android:selectableItemBackground"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:clickable="true"
+    android:focusable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,12 +25,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/city_image"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_gravity="top|start"
                 android:scaleType="centerCrop"
-                android:src="@drawable/testimage" />
+                />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -38,15 +42,16 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/city_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|start"
-                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:paddingBottom="8dp"
-                    android:text="Golghar patna"
+                    tools:text="Golghar patna"
                     android:textColor="@android:color/white"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
+    android:foreground="?android:selectableItemBackground"
     android:id="@+id/card_view"
     android:layout_height="400dp"
+    android:clickable="true"
+    android:focusable="true"
     android:padding="8dp"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +30,7 @@
                 android:layout_height="220dp"
                 android:layout_gravity="top|start"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pic" />
+                />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -42,11 +46,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|start"
-                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:paddingBottom="8dp"
-                    android:text="Golghar patna"
+                    tools:text="Golghar patna"
                     android:textColor="@android:color/white"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -63,8 +68,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
             <TextView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:text="@string/temp"
+                tools:text="@string/temp"
                 android:textColor="@android:color/black"
                 android:layout_height="wrap_content"
                 android:padding="8dp"/>
