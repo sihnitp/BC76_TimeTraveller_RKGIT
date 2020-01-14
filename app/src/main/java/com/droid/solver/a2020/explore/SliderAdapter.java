@@ -23,7 +23,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-//        viewHolder.textViewDescription.setText("This is slider item " + position);
 
         switch (position) {
             case 0:

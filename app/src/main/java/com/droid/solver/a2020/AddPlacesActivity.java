@@ -184,8 +184,10 @@ public class AddPlacesActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onBackPressed() {
-        
-        super.onBackPressed();
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
+
+
 }
