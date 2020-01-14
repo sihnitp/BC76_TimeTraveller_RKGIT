@@ -110,8 +110,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(isCitySelected&&isStateSelected){
-//            startActivity(new Intent(getActivity(), ExploreActivity.class));
-            makeDatabaseSchema();
+            startActivity(new Intent(getActivity(), ExploreActivity.class));
         }else{
 
             if(!isStateSelected) {
@@ -127,50 +126,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         Toast.makeText(getActivity(), s+" is clicked", Toast.LENGTH_SHORT).show();
     }
 
-    public void makeDatabaseSchema(){
-
-        FirebaseDatabase database=FirebaseDatabase.getInstance();
-//         String [] st=new String[]{
-//                "andhra pradesh","arunachal pradesh","assam","bihar","chhattisgarh","goa","gujrat","haryana","himachal pradesh",
-//                 "jammu and kashmir","jharkhand","karnataka","kerela","madhya pradesh","maharashtra","manipur","meghalaya","mizoram",
-//                 "nagaland","odisha","punjab","rajsthan","sikkim","tamil nadu","telangana","tripura","uttar pradesh","uttarakhand",
-//                 "west bengal","andman and nicobar islands","chandigarh","dadra and nagar haveli","daman and diu","lakshadweep",
-//                 "delhi","pondicherry"
-//        };
-
-
-        for(int j=0;j<state.length;j++) {
-            DatabaseReference ref=database.getReference("state/"+state[j]);
-            String [] city=cityArrayList.get(j);
-            for(int k=0;k<city.length;k++) {
-                String kk=city[k];
-                DatabaseReference reference=ref.child(kk);
-                String cityId=reference.push().getKey();
-                reference.child("cityid").setValue(cityId);
-                reference.child("cityname").setValue("name");
-                reference.child("cityimage").setValue("imageurl");
-                reference.child("description").setValue("description");
-
-                reference.child("skills").child("image").setValue("imageurl");
-                reference.child("skills").child("description").setValue("description");
-
-                reference.child("practices").child("image").setValue("imageurl");
-                reference.child("practices").child("description").setValue("description");
-
-                for (int i = 0; i < 5; i++) {
-                    String key = reference.child("physicalartifacts").push().getKey();
-                    reference.child("physicalartifacts").child(key).child("image").setValue("imageurl");
-                    reference.child("physicalartifacts").child(key).child("description").setValue("description");
-                    reference.child("physicalartifacts").child(key).child("name").setValue("name");
-
-                }
-                reference.child("feedback").setValue(null);
-            }
-
-        }
-        //reference.child("feedback").child()
-
-    }
 
     private void addCityArray(){
 
