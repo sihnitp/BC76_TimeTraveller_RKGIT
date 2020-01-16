@@ -2,15 +2,18 @@ package com.droid.solver.a2020;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,8 +23,10 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -44,15 +49,25 @@ import com.google.firebase.ml.vision.cloud.landmark.FirebaseVisionCloudLandmarkD
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 import com.google.firebase.ml.vision.common.FirebaseVisionLatLng;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.CAMERA_SERVICE;
 
 public class CaptureFragment extends Fragment implements View.OnClickListener {
 
+    private static final int PICK_IMAGE = 51;
+    private Uri imageUri;
     private CardView cardView;
     private TextView textView;
     private ImageView imageView;
@@ -69,7 +84,9 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
     public static  CaptureFragment getInstance(){
         return new CaptureFragment();
     }
+
     public CaptureFragment() {}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,21 +110,25 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void takePicture(){
+    private void takePicture() {
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.CAMERA)) {
-                //show an explanation
+
+                //show an explanation for requesting request
+
             } else {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                //request permission
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_PERMISSION_CODE);
             }
         } else {
-            Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(intent.resolveActivity(getActivity().getPackageManager())!=null){
-                startActivityForResult(intent, CAMERA_REQUEST_CODE);
-            }
+            //permission granted
+
         }
     }
 
@@ -127,43 +148,28 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode==CAMERA_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            Bitmap picBitmap=null;
-            if(data!=null && data.getExtras()!=null && data.getExtras().get("data")!=null){
+        if(requestCode==CAMERA_REQUEST_CODE && resultCode==RESULT_OK){
+            try{
 
-                 picBitmap= (Bitmap) data.getExtras().get("data");
-                 imageView.setImageBitmap(picBitmap);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                picBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                processImage(byteArray);
-            }else{
-                Toast.makeText(getActivity(), "Bitmap is null ", Toast.LENGTH_SHORT).show();
+                Bitmap thumbnail=MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imageUri );
+                imageView.setImageBitmap(thumbnail);
+
+            }catch (Exception e){
+                Log.i("TAG", e.getMessage());
             }
         }
     }
 
-     private void processImage(byte[] buffer){
+    private void processImage(Bitmap bitmap){
         Log.i("TAG", "bitmap processing");
          FirebaseVisionCloudDetectorOptions options =
                  new FirebaseVisionCloudDetectorOptions.Builder()
                          .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
                          .setMaxResults(10)
                          .build();
-         int rotation=0;
-         try {
-              rotation=getRotationCompensation("", getActivity(),getActivity() );
-         } catch (CameraAccessException e) {
-             e.printStackTrace();
-         }
 
-         FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
-                 .setWidth(480)
-                 .setHeight(360)
-                 .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
-                 .setRotation(rotation)
-                 .build();
-           FirebaseVisionImage image = FirebaseVisionImage.fromByteArray(buffer, metadata);
+
+           FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
            FirebaseVisionCloudLandmarkDetector detector = FirebaseVision.getInstance()
                  .getVisionCloudLandmarkDetector(options);
 
@@ -206,36 +212,12 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                  ;
      }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private int getRotationCompensation(String cameraId, Activity activity, Context context)
-            throws CameraAccessException {
-        int deviceRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-        int rotationCompensation = ORIENTATIONS.get(deviceRotation);
-
-        CameraManager cameraManager = (CameraManager) context.getSystemService(CAMERA_SERVICE);
-        int sensorOrientation = cameraManager.getCameraCharacteristics(cameraId).get(CameraCharacteristics.SENSOR_ORIENTATION);
-        rotationCompensation = (rotationCompensation + sensorOrientation + 270) % 360;
-
-        // Return the corresponding FirebaseVisionImageMetadata rotation value.
-        int result;
-        switch (rotationCompensation) {
-            case 0:
-                result = FirebaseVisionImageMetadata.ROTATION_0;
-                break;
-            case 90:
-                result = FirebaseVisionImageMetadata.ROTATION_90;
-                break;
-            case 180:
-                result = FirebaseVisionImageMetadata.ROTATION_180;
-                break;
-            case 270:
-                result = FirebaseVisionImageMetadata.ROTATION_270;
-                break;
-            default:
-                result = FirebaseVisionImageMetadata.ROTATION_0;
-                Log.i("TAG", "Bad rotation value: " + rotationCompensation);
-        }
-        return result;
+    private void selectImageFromGallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select image to upload"), PICK_IMAGE);
     }
+
 
 }

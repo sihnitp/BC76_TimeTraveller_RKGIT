@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         tablayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        adapter.addFragment(TrendingFragment.getInstance(), "Trending");
         adapter.addFragment(ExploreFragment.getInstance(), "Explore");
-        adapter.addFragment(CaptureFragment.getInstance(), "Capture");
+        adapter.addFragment(TrendingFragment.getInstance(), "Trending");
+//        adapter.addFragment(CaptureFragment.getInstance(), "Capture");
         tablayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(adapter);
         toolbar.inflateMenu(R.menu.toolbar_menu);

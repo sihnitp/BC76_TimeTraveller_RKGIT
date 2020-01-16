@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.droid.solver.a2020.DetailActivity;
 import com.droid.solver.a2020.PhysicalArtifactsModel;
 import com.droid.solver.a2020.R;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,7 +54,7 @@ public class ExploreActivity extends AppCompatActivity {
     public void init(){
         sliderView=findViewById(R.id.imageSlider);
         toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle(cityName.substring(0,1).toUpperCase()+cityName.substring(1));
+//        toolbar.setTitle(cityName.substring(0,1).toUpperCase()+cityName.substring(1));
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,6 +72,29 @@ public class ExploreActivity extends AppCompatActivity {
         cityCard=findViewById(R.id.card_view);
         practicesCard=findViewById(R.id.practices_card);
         skillCard=findViewById(R.id.skills_card);
+        final CollapsingToolbarLayout collapsingToolbarLayout =  findViewById(R.id.collapsing_toolbar);
+        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(cityName);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        collapsingToolbarLayout.setExpandedTitleTextColor(getResources().getColorStateList(R.color.white,null));
+                    }
+                    isShow = true;
+                } else if(isShow) {
+                    collapsingToolbarLayout.setTitle(" ");
+                    isShow = false;
+                }
+            }
+        });
         fetchDetails();
     }
 
@@ -142,12 +168,12 @@ public class ExploreActivity extends AppCompatActivity {
                  root.setVisibility(View.VISIBLE);
                  progressDialog.dismiss();
 
-                 cityCard.setOnClickListener(new View.OnClickListener() {
-                     @Override
-                     public void onClick(View view) {
-                         showDetailActivity(cityimage,cityName,citydescription);
-                     }
-                 });
+//                 cityCard.setOnClickListener(new View.OnClickListener() {
+//                     @Override
+//                     public void onClick(View view) {
+//                         showDetailActivity(cityimage,cityName,citydescription);
+//                     }
+//                 });
                  cityDescription.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View view) {
