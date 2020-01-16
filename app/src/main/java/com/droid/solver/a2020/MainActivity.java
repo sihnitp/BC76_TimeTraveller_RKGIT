@@ -1,17 +1,15 @@
 package com.droid.solver.a2020;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.facebook.login.Login;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         setContentView(R.layout.activity_main);
         init();
         invalidateOptionsMenu();
-        Log.i("TAG", "inside main");
     }
     private void init() {
         toolbar = findViewById(R.id.toolbar);
@@ -42,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(TrendingFragment.getInstance(), "Trending");
         adapter.addFragment(ExploreFragment.getInstance(), "Explore");
+        adapter.addFragment(CaptureFragment.getInstance(), "Capture");
         tablayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(adapter);
         toolbar.inflateMenu(R.menu.toolbar_menu);
@@ -73,10 +71,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         return super.onPrepareOptionsMenu(menu);
 
     }
-
-
-
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 startActivity(new Intent(this,AddPlacesActivity.class));
                 break;
             case R.id.about:
-                showMessage("About");
+                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.share:
                 showMessage("Share");

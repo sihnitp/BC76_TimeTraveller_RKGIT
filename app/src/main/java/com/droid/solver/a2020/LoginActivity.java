@@ -33,6 +33,7 @@ private int RC_SIGN_IN=101;
                         .setLogo(R.drawable.logo)
                         .build(),
                 RC_SIGN_IN);
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -42,13 +43,13 @@ private int RC_SIGN_IN=101;
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                Intent intent=new Intent(this,MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this,MainActivity.class));
                 finish();
             } else {
-                if(response!=null&&response.getError()!=null)
-                   Toast.makeText(this, "sign in  failed ,", Toast.LENGTH_SHORT).show();
-
+                if(response!=null&&response.getError()!=null) {
+                    Toast.makeText(this, "sign in  failed ,", Toast.LENGTH_SHORT).show();
+                }
+                onBackPressed();
             }
         }
     }

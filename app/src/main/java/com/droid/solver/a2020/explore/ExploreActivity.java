@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,31 +12,24 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.droid.solver.a2020.DetailActivity;
 import com.droid.solver.a2020.PhysicalArtifactsModel;
 import com.droid.solver.a2020.R;
-import com.droid.solver.a2020.RootModel;
-import com.firebase.ui.auth.data.model.IntentRequiredException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class ExploreActivity extends AppCompatActivity implements View.OnClickListener {
+public class ExploreActivity extends AppCompatActivity {
 
     private SliderView sliderView;
     private Toolbar toolbar;
-    private String state,cityName;
+    private String state,cityName="City name";
     private ImageView cityImage,practicesImages,skillImages;
     private TextView cityTitle,cityDescription,practicesDescription,skillDescription;
     ProgressDialog progressDialog;
@@ -57,9 +47,11 @@ public class ExploreActivity extends AppCompatActivity implements View.OnClickLi
         init();
 
     }
+
     public void init(){
         sliderView=findViewById(R.id.imageSlider);
         toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle(cityName.substring(0,1).toUpperCase()+cityName.substring(1));
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -141,7 +133,9 @@ public class ExploreActivity extends AppCompatActivity implements View.OnClickLi
                  Picasso.get().load(cityimage).placeholder(R.drawable.trending_item_gradient).into(cityImage);
                  Picasso.get().load(practicesimage).placeholder(R.drawable.trending_item_gradient).into(practicesImages);
                  Picasso.get().load(skillimage).placeholder(R.drawable.trending_item_gradient).into(skillImages);
-                 cityTitle.setText(cityName);
+
+                 String ss=cityName.substring(0,1).toUpperCase()+cityName.substring(1);
+                 cityTitle.setText(ss);
                  cityDescription.setText(citydescription);
                  practicesDescription.setText(practicesdescription);
                  skillDescription.setText(skilldescription);
@@ -193,21 +187,6 @@ public class ExploreActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.card_view:
-                break;
-            case R.id.city_description:
-                break;
-            case R.id.practices_card:
-                break;
-            case R.id.skills_card:
-
-                break;
-        }
-    }
     private void showDetailActivity(String url,String title,String description){
         Intent intent=new Intent(this, DetailActivity.class);
         intent.putExtra("image", url);

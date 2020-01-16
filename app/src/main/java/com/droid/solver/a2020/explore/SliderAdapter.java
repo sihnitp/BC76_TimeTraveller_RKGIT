@@ -45,7 +45,8 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
         final String description=list.get(position).getDescription();
 
         Picasso.get().load(url).into(viewHolder.imageView);
-        viewHolder.title.setText(title);
+        String ss=title.substring(0,1).toUpperCase()+title.substring(1);
+        viewHolder.title.setText(ss);
         viewHolder.description.setText(description);
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

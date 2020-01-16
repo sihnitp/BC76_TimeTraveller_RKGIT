@@ -60,7 +60,7 @@
         android:scrollbars="vertical"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:hint="Enter city name"
+        android:hint="Enter place name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
