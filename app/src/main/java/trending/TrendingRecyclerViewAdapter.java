@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.droid.solver.a2020.R;
 import com.droid.solver.a2020.explore.ExploreActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.Collections;
 import java.util.List;
 
 
@@ -39,11 +35,14 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder  instanceof TrendingViewHolder){
             TrendingModel model=list.get(position);
+
             final String cityName=model.getCityName();
             final String stateName=model.getStateName();
+            final String ss=cityName.substring(0,1).toUpperCase()+cityName.substring(1);
             String description=model.getDescription();
-            String cityImage=model.getCityImage();
-            ((TrendingViewHolder) holder).title.setText(cityName);
+            final String cityImage=model.getCityImage();
+
+            ((TrendingViewHolder) holder).title.setText(ss);
             ((TrendingViewHolder) holder).subtitle.setText(description);
             Picasso.get().load(cityImage).placeholder(R.drawable.trending_item_gradient)
                     .into(((TrendingViewHolder) holder).imageOfCity);
@@ -59,7 +58,6 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter {
             });
         }
     }
-
     @Override
     public int getItemCount() {
         return list==null?0:list.size();

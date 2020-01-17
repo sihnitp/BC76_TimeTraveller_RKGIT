@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +58,7 @@ public class TrendingFragment extends Fragment {
 
 
     }
+
     ValueEventListener listener=new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -82,6 +84,7 @@ public class TrendingFragment extends Fragment {
         public void onCancelled(@NonNull DatabaseError databaseError) {
             Log.i("TAG", "query cancelled");
             progressBar.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), "Error occured,",Toast.LENGTH_SHORT).show();
         }
     };
 

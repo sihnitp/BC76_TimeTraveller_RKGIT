@@ -207,7 +207,7 @@ public class ExploreActivity extends AppCompatActivity {
         progressDialog.setTitle("Please wait ");
         progressDialog.setMessage("Loading ...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
 
