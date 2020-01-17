@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<item
-    android:title="Login"
-    android:id="@+id/login"
-    android:orderInCategory="4"
-    app:showAsAction="never"/>
     <item
         android:title="Add Place"
         android:id="@+id/add_place"
-        android:orderInCategory="1"
-        app:showAsAction="never"/>
-    <item
-        android:title="about"
-        android:id="@+id/about"
         android:orderInCategory="2"
+        android:icon="@drawable/add_location"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:title="About"
+        android:id="@+id/about"
+        android:orderInCategory="3"
         app:showAsAction="never"/>
     <item
         android:title="Share this app"
         android:id="@+id/share"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_24dp"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        android:title="Search"/>
+
+
 
 </menu>

@@ -18,6 +18,7 @@ import com.droid.solver.a2020.PhysicalArtifactsModel;
 import com.droid.solver.a2020.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -160,6 +161,7 @@ public class ExploreActivity extends AppCompatActivity {
                  Picasso.get().load(practicesimage).placeholder(R.drawable.trending_item_gradient).into(practicesImages);
                  Picasso.get().load(skillimage).placeholder(R.drawable.trending_item_gradient).into(skillImages);
 
+
                  String ss=cityName.substring(0,1).toUpperCase()+cityName.substring(1);
                  cityTitle.setText(ss);
                  cityDescription.setText(citydescription);
@@ -168,12 +170,10 @@ public class ExploreActivity extends AppCompatActivity {
                  root.setVisibility(View.VISIBLE);
                  progressDialog.dismiss();
 
-//                 cityCard.setOnClickListener(new View.OnClickListener() {
-//                     @Override
-//                     public void onClick(View view) {
-//                         showDetailActivity(cityimage,cityName,citydescription);
-//                     }
-//                 });
+                 String uid= FirebaseAuth.getInstance().getUid();
+                 if(uid!=null){
+                     updateDatabase(cityid,uid,state,cityName,cityimage,citydescription);
+                 }
                  cityDescription.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View view) {
@@ -219,6 +219,16 @@ public class ExploreActivity extends AppCompatActivity {
         intent.putExtra("title", title);
         intent.putExtra("description", description);
         startActivity(intent);
+    }
+
+    private void updateDatabase(String cityId,String uid,String stateName,String cityName,String cityImage,String cityDescription){
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("recommended");
+        reference.child(cityId).child("user").child(uid).setValue("visited");
+        reference.child(cityId).child("statename").setValue(stateName);
+        reference.child(cityId).child("cityname").setValue(cityName);
+        reference.child(cityId).child("cityimage").setValue(cityImage);
+        reference.child(cityId).child("description").setValue(cityDescription);
+
     }
 
 }

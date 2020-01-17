@@ -2,6 +2,7 @@ package com.droid.solver.a2020;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
+import com.droid.solver.a2020.explore.ExploreActivity;
 import com.droid.solver.a2020.explorefragment.ExploreFragmentAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -112,7 +114,6 @@ public class ExploreFragment extends Fragment implements  View.OnClickListener{
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode==LOCATION_PERMISSION_CODE && grantResults.length>0 &&
                 grantResults[0]==PackageManager.PERMISSION_GRANTED){
-
               trackLocation();
 
         }else{
@@ -125,14 +126,20 @@ public class ExploreFragment extends Fragment implements  View.OnClickListener{
         locationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                Log.i("TAG", "inside track location");
                 if(location!=null){
                     double latitude=location.getLatitude();
                     double longitude=location.getLongitude();
                     Log.i("TAG", "longitude : "+longitude);
                     Log.i("TAG","Latitude : "+latitude );
                     Log.d("TAG", ""+location.getAccuracy());
-                    String [] tt=findNearbyArtifacts(longitude, latitude);
-
+                    String [] tt=findNearbyArtifacts(longitude, latitude);//state and city
+                    Intent intent=new Intent(getActivity(), ExploreActivity.class);
+                    intent.putExtra("state", tt[0]);
+                    intent.putExtra("city", tt[1]);
+                    startActivity(intent);
+                }else{
+                    Log.i("TAG", "last location is null");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -222,7 +229,6 @@ public class ExploreFragment extends Fragment implements  View.OnClickListener{
                 "88.263641", "87.86667", "88.38"};
 
         double  minDist=Integer.MAX_VALUE;
-
         int minIndex=147;
         for(int i=0;i<146;i++){
             double lat=Double.parseDouble(latitude[i]);
@@ -234,6 +240,7 @@ public class ExploreFragment extends Fragment implements  View.OnClickListener{
             }
 
         }
+
         return new String[] {stateArr[minIndex],cityArr[minIndex]};
     }
 

@@ -23,11 +23,11 @@ public class ExplorerCityActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private String[] state = new String[]{
-            "andhra pradesh", "arunachal pradesh", "assam", "bihar", "chhattisgarh", "goa", "gujrat", "haryana", "himachal pradesh",
+            "andhra pradesh", "arunachal pradesh", "assam", "bihar", "chhattisgarh", "goa", "gujarat", "haryana", "himachal pradesh",
             "jammu and kashmir", "jharkhand", "karnataka", "kerela", "madhya pradesh", "maharashtra", "manipur", "meghalaya", "mizoram",
             "nagaland", "odisha", "punjab", "rajasthan", "sikkim", "tamil nadu", "telangana", "tripura", "uttar pradesh", "uttarakhand",
             "west bengal", "andaman and nicobar islands", "chandigarh", "dadar and nagar haveli", "daman and diu", "lakshadweep",
-            "delhi", "pondicherry"
+            "delhi", "puducherry"
     };
 
     private List<String[]> cityArrayList;
@@ -144,11 +144,6 @@ public class ExplorerCityActivity extends AppCompatActivity {
         cityArrayList.add(lakshadweep);
         cityArrayList.add(delhi);
         cityArrayList.add(pondicherry);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

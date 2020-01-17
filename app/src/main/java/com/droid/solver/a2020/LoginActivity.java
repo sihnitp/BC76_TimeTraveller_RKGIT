@@ -8,8 +8,11 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,15 +27,23 @@ private int RC_SIGN_IN=101;
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                 new AuthUI.IdpConfig.FacebookBuilder().build());
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        if(user!=null){
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }else {
 
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setIsSmartLockEnabled(false)
-                        .setLogo(R.drawable.logo)
-                        .build(),
-                RC_SIGN_IN);
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .setIsSmartLockEnabled(false)
+                            .setLogo(R.drawable.logo)
+                            .setTheme(R.style.FullscreenTheme)
+                            .build(),
+                    RC_SIGN_IN);
+        }
 
     }
     @Override
@@ -43,21 +54,21 @@ private int RC_SIGN_IN=101;
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                startActivity(new Intent(this,MainActivity.class));
-                finish();
+                FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                if(user!=null) {
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user");
+                    String uid = user.getUid();
+                    reference.child(uid).child("name").setValue(user.getDisplayName());
+                    reference.child(uid).child("email").setValue(user.getEmail());
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                }
             } else {
                 if(response!=null&&response.getError()!=null) {
                     Toast.makeText(this, "sign in  failed ,", Toast.LENGTH_SHORT).show();
                 }
-                onBackPressed();
             }
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this,MainActivity.class));
-        finish();
-        super.onBackPressed();
-    }
 }

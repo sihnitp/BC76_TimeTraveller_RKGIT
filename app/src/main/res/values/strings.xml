@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">2020</string>
+    <string name="app_name">Sanskriti</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_application_id" translatable="false">513844805913776</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb513844805913776</string>
@@ -21,6 +21,7 @@ classified in different categories like state wise, latest trends.</string>
     <string name="physical_artifacts"><u>Physical Artifacts</u></string>
     <string name="practices"><u>Practices/Culture</u></string>
     <string name="skills"><u>Skills/Knowledge</u></string>
+    <string name="YOUR_GOOGLE_MAP_API_KEY">AIzaSyAGYsCostzVQhsi0HMK6lJ54DolyDvr2FU</string>
 
 
 </resources>
