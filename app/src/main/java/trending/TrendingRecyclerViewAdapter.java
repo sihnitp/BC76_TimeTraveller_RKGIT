@@ -38,7 +38,10 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter {
 
             final String cityName=model.getCityName();
             final String stateName=model.getStateName();
-            final String ss=cityName.substring(0,1).toUpperCase()+cityName.substring(1);
+            String ss=null;
+            if(cityName!=null) {
+                  ss = cityName.substring(0, 1).toUpperCase() + cityName.substring(1);
+            }
             String description=model.getDescription();
             final String cityImage=model.getCityImage();
 

@@ -55,7 +55,6 @@ public class ExploreActivity extends AppCompatActivity {
     public void init(){
         sliderView=findViewById(R.id.imageSlider);
         toolbar=findViewById(R.id.toolbar);
-//        toolbar.setTitle(cityName.substring(0,1).toUpperCase()+cityName.substring(1));
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

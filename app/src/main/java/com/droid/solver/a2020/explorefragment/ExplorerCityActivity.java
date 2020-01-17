@@ -57,7 +57,6 @@ public class ExplorerCityActivity extends AppCompatActivity {
         ExploreFragmentCityAdapter adapter = new ExploreFragmentCityAdapter(temp, this, state[position]);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-
     }
 
     public void addCity() {
@@ -65,48 +64,44 @@ public class ExplorerCityActivity extends AppCompatActivity {
         String[] andhra = new String[]{"amravati", "visakhapatnam", "vijayawada", "tirupati", "guntur"};
         String[] arunachal = new String[]{"tawang", "itanagar", "zero", "bomdila", "pasighat"};
         String[] assam = new String[]{"guwahati", "silchar", "dibrugarh", "jorhat", "nagaon"};
+
         String[] bihar = new String[]{"patna", "gaya", "bhagalpur", "nalanda", "darbhanga", "sitamarhi", "madhubani", "chhapra", "buxar", "ara", "rajgir",
-                "muzaffarpur", "saharsha", "begusarai", "katihar", "sasaram", "siwan", "nawada", "motihari", "jamui", "bettiah", "aurangabad",
-                "jehanabad", "purnea"};
-        String[] chhattisgarh = new String[]{"raipur", "bilaspur", "bastar", "durg", "dantewada"};
-        String[] goa = new String[]{"vasco da gama", "margao", "panaji", "mapusa", "ponda"};
-        String[] gujrat = new String[]{"ahmedabad", "surat", "vadodra", "rajkot", "gandhinagar", "junagadh", "bhavnagar",
-                "jamnagar", "porbandar", "dwarka", "palanpur", "godhra", "idar"};
-        String[] haryana = new String[]{"karnal", "hisar", "rohtak", "sonipat", "panipat"};
-        String[] himachal = new String[]{"shimla", "kufri", "dharamshala", "kullu manali", "khajjiar"};
-        String[] jammu = new String[]{"jammu", "kashmir", "gulmarg", "sonamarg", "amarnath"};
-        String[] jharkhand = new String[]{"ranchi", "jamshedpur", "deoghar", "bokaro", "giridih"};
-        String[] karnataka = new String[]{"bengaluru", "hampi", "mysore", "coorg", "mangalore", "ooty"};
-        String[] kerela = new String[]{"thiruvananthapuram", "kochi", "kovalam", "alleppey", "munar"};
-        String[] madhya = new String[]{"bhopal", "indore", "jabalpur", "gwalior", "ujjain"};
-        String[] maharastra = new String[]{"mumbai", "aurangabad", "pune", "nagpur", "nashik", "chandrapur", "jalgaon", "khandala", "kolhapur",
-                "solapur", "thane"};
-        String[] manipur = new String[]{"imphal", "kakching", "moirang", "churachandpur", "ukhrul"};
-        String[] meghayala = new String[]{"shillong", "cherrapunji", "tura", "umroi", "mawlai"};
-        String[] mizoram = new String[]{"aizwal", "champhai", "kolasib", "lawngtlai", "lunglei", "mamit"};
-        String[] nagaland = new String[]{"kohima", "dimapur", "mokokchung", "longleng", "mon"};
-        String[] oddisha = new String[]{"bhubaneswar", "cuttack", "rourkela", "puri", "sambalpur"};
-        String[] punjab = new String[]{"amritsar", "patiala", "jalandhar", "ludhiana", "mohali"};
-        String[] rajasthan = new String[]{"jaipur", "jodhpur", "udaipur", "jaisalmer", "ajmer", "bikaner", "kota", "pushkar", "alwar",
-                "chhitorgarh", "bundi"};
-        String[] sikkim = new String[]{"gangtok", "namchi", "nayabajar", "rangpo", "rhenak"};
-        String[] tamilnadu = new String[]{"chennai", "madurai", "coimbatore", "tiruchirappali", "salem", "vellore", "thanjavur"};
-        String[] telangana = new String[]{"hyderabad", "warangal", "adilabad", "karimnagar", "khammam", "nalgonda", "nizamabad"};
-        String[] tripura = new String[]{"agartala", "udaipur", "dharmanagar"};
+                "muzaffarpur", "saharsha", "begusarai"};
+
+        String[] chhattisgarh = new String[]{"raipur", "bilaspur", "bastar"};
+        String[] goa = new String[]{"vasco da gama", "panaji", "ponda"};
+        String[] gujrat = new String[]{"ahmedabad", "surat", "vadodra", "rajkot", "gandhinagar", "porbandar", "dwarka"};
+        String[] haryana = new String[]{"karnal", "rohtak", "panipat"};
+        String[] himachal = new String[]{"shimla", "dharamshala", "kullu manali"};
+        String[] jammu = new String[]{"jammu", "kashmir", "sonamarg", "amarnath"};
+        String[] jharkhand = new String[]{"ranchi", "jamshedpur", "deoghar", "bokaro"};
+        String[] karnataka = new String[]{"bengaluru", "hampi", "mangalore"};
+        String[] kerela = new String[]{"thiruvananthapuram", "kochi"};
+        String[] madhya = new String[]{"bhopal", "indore", "gwalior", "ujjain"};
+        String[] maharastra = new String[]{"mumbai", "aurangabad", "pune", "nagpur", "nashik", "khandala", "thane"};
+        String[] manipur = new String[]{"imphal", "kakching"};
+        String[] meghayala = new String[]{"shillong", "cherrapunji"};
+        String[] mizoram = new String[]{"aizwal", "champhai"};
+        String[] nagaland = new String[]{"kohima"};
+        String[] oddisha = new String[]{"bhubaneswar", "cuttack", "rourkela"};
+        String[] punjab = new String[]{"amritsar", "patiala", "jalandhar", "ludhiana"};
+        String[] rajasthan = new String[]{"jaipur", "jodhpur", "udaipur", "jaisalmer", "ajmer", "bikaner", "kota", "pushkar", "alwar", "chhitorgarh"};
+        String[] sikkim = new String[]{"gangtok"};
+        String[] tamilnadu = new String[]{"chennai", "madurai", "coimbatore", "tiruchirappali", "vellore"};
+        String[] telangana = new String[]{"hyderabad", "warangal"};
+        String[] tripura = new String[]{"agartala", "udaipur"};
         String[] uttarpradesh = new String[]{"lucknow", "prayagraj", "kanpur", "agra", "aligarh", "bareilly", "jhansi", "mathura",
-                "jaunpur", "firozabad", "fatehpur sikri", "gorakhpur", "vrindavan", "mirzapur", "ghaziabad", "meerut", "saharanpur", "muzzafarnagar",
-                "noida", "unnao", "kashganj", "ghazipur", "ballia", "pilibhit", "raebareli"};
-        String[] uttarakhand = new String[]{"dehradun", "haridwar", "kashipur", "roorkee", "haldwani"};
+                "jaunpur", "firozabad", "fatehpur sikri", "gorakhpur", "vrindavan", "mirzapur", "ghaziabad"};
+        String[] uttarakhand = new String[]{"dehradun", "haridwar", "kashipur", "roorkee"};
         String[] westbengal = new String[]{"kolkata", "asansol", "siliguri", "durgapur", "haldia", "darjeeling", "malda", "kharagpur",
-                "jalpaiguri", "birbhum", "bishnupur", "chandannagar", "howrah", "kalimpong", "santhia", "bolpur", "bardhaman",
-                "murshidabad", "purulia", "serampore", "kalyani"};
+                "jalpaiguri", "birbhum", "bishnupur", "chandannagar", "howrah", "bardhaman"};
         String[] andman = new String[]{"port blair", "neil island", "ross island", "diglipur", "mayabunder"};
         String[] chandigarh = new String[]{"chandigarh"};
-        String[] dadra = new String[]{"silavasa", "dadra", "naroli", "vapi", "amli"};
+        String[] dadra = new String[]{"silavasa"};
         String[] daman = new String[]{"daman", "diu"};
-        String[] lakshadweep = new String[]{"kavaratti", "minicoy island", "amini"};
+        String[] lakshadweep = new String[]{"kavaratti"};
         String[] delhi = new String[]{"delhi"};
-        String[] pondicherry = new String[]{"pudducherry", "mahe", "karaikal", "yanam", "villianpur"};
+        String[] pondicherry = new String[]{"pudducherry", "mahe", "karaikal", "yanam"};
 
         cityArrayList.add(andhra);
         cityArrayList.add(arunachal);
