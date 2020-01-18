@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Bengali"
+        android:id="@+id/bengali"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="1"/>
+    <item
+        android:title="English"
+        android:id="@+id/english"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"/>
+    <item
+        android:title="Hindi"
+        android:id="@+id/hindi"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="3"/>
+    <item
+        android:title="Marathi"
+        android:id="@+id/marathi"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="4"/>
+    <item
+        android:title="Tamil"
+        android:id="@+id/tamil"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="5"/>
+    <item
+        android:title="Telugu"
+        android:id="@+id/telugu"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="6"/>
+    <item
+        android:title="Urdu"
+        android:id="@+id/urdu"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="7"/>
+
+</menu>

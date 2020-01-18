@@ -2,13 +2,19 @@ package com.droid.solver.a2020;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
-import com.droid.solver.a2020.explorefragment.StreetViewActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +27,19 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private TabLayout tablayout;
     private Toolbar toolbar;
     private List<String> listOfCity;
+    private CoordinatorLayout coordinatorLayout;
+    private SharedPreferences preferences;
+    public static String preferenceName="preferenceName";
+    public static String lan="language";
+    public PopupMenu popupMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        preferences=this.getSharedPreferences(preferenceName,MODE_PRIVATE);
         invalidateOptionsMenu();
     }
 
@@ -45,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         toolbar.inflateMenu(R.menu.toolbar_menu);
         setSupportActionBar(toolbar);
         listOfCity=new ArrayList<>();
+        coordinatorLayout=findViewById(R.id.coordinator);
         toolbar.setOnMenuItemClickListener(this);
         Thread thread=new Thread(){
             @Override
@@ -53,11 +67,15 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             }
         };
         thread.start();
+         Log.i("TAG", "initialized");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        View menuItemView = findViewById(R.id.translate);
+        popupMenu = new PopupMenu(this, menuItemView);
+        popupMenu.inflate(R.menu.translator_menu);
         return true;
     }
 
@@ -74,65 +92,105 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             case R.id.share:
                 showMessage("Share");
                 break;
-            case R.id.search:
-                showMessage("search clicked");
-                startActivity(new Intent(this, StreetViewActivity.class));
+            case R.id.translate:
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        SharedPreferences.Editor editor=preferences.edit();//false for english
+                        switch (menuItem.getItemId()){
+                            case R.id.bengali:
+                                showMessage("Bengali");
+                                editor.putInt(lan, 0);
+                                editor.apply();
+                                break;
+                            case R.id.english:
+                                showMessage("English");
+                                editor.putInt(lan, 1);
+                                editor.apply();
+                                break;
+                            case R.id.hindi:
+                                showMessage("Hindi");
+                                editor.putInt(lan, 2);
+                                editor.apply();
+                                break;
+                            case R.id.marathi:
+                                showMessage("Marathi");
+                                editor.putInt(lan, 3);
+                                editor.apply();
+                                break;
+                            case R.id.tamil:
+                                showMessage("Tamil");
+                                editor.putInt(lan, 4);
+                                editor.apply();
+                                break;
+                            case R.id.telugu:
+                                showMessage("Telugu");
+                                editor.putInt(lan, 5);
+                                editor.apply();
+                                break;
+                            case R.id.urdu:
+                                showMessage("Urdu");
+                                editor.putInt(lan, 6);
+                                break;
+                        }
+                        return true;
+                    }
+                });
                 break;
         }
         return false;
     }
 
     private void showMessage(String s){
-        Toast.makeText(this,s+" is cilcked",Toast.LENGTH_SHORT ).show();
+        Snackbar.make(coordinatorLayout, "Language switched to "+s ,Snackbar.LENGTH_SHORT).show();
     }
 
     public void addCityToList() {
+
         List<String[]> cityArrayList=new ArrayList<>();
+
         String[] andhra = new String[]{"amravati", "visakhapatnam", "vijayawada", "tirupati", "guntur"};
         String[] arunachal = new String[]{"tawang", "itanagar", "zero", "bomdila", "pasighat"};
         String[] assam = new String[]{"guwahati", "silchar", "dibrugarh", "jorhat", "nagaon"};
+
         String[] bihar = new String[]{"patna", "gaya", "bhagalpur", "nalanda", "darbhanga", "sitamarhi", "madhubani", "chhapra", "buxar", "ara", "rajgir",
-                "muzaffarpur", "saharsha", "begusarai", "katihar", "sasaram", "siwan", "nawada", "motihari", "jamui", "bettiah", "aurangabad",
-                "jehanabad", "purnea"};
-        String[] chhattisgarh = new String[]{"raipur", "bilaspur", "bastar", "durg", "dantewada"};
-        String[] goa = new String[]{"vasco da gama", "margao", "panaji", "mapusa", "ponda"};
-        String[] gujrat = new String[]{"ahmedabad", "surat", "vadodra", "rajkot", "gandhinagar", "junagadh", "bhavnagar",
-                "jamnagar", "porbandar", "dwarka", "palanpur", "godhra", "idar"};
-        String[] haryana = new String[]{"karnal", "hisar", "rohtak", "sonipat", "panipat"};
-        String[] himachal = new String[]{"shimla", "kufri", "dharamshala", "kullu manali", "khajjiar"};
-        String[] jammu = new String[]{"jammu", "kashmir", "gulmarg", "sonamarg", "amarnath"};
-        String[] jharkhand = new String[]{"ranchi", "jamshedpur", "deoghar", "bokaro", "giridih"};
-        String[] karnataka = new String[]{"bengaluru", "hampi", "mysore", "coorg", "mangalore", "ooty"};
-        String[] kerela = new String[]{"thiruvananthapuram", "kochi", "kovalam", "alleppey", "munar"};
-        String[] madhya = new String[]{"bhopal", "indore", "jabalpur", "gwalior", "ujjain"};
-        String[] maharastra = new String[]{"mumbai", "aurangabad", "pune", "nagpur", "nashik", "chandrapur", "jalgaon", "khandala", "kolhapur",
-                "solapur", "thane"};
-        String[] manipur = new String[]{"imphal", "kakching", "moirang", "churachandpur", "ukhrul"};
-        String[] meghayala = new String[]{"shillong", "cherrapunji", "tura", "umroi", "mawlai"};
-        String[] mizoram = new String[]{"aizwal", "champhai", "kolasib", "lawngtlai", "lunglei", "mamit"};
-        String[] nagaland = new String[]{"kohima", "dimapur", "mokokchung", "longleng", "mon"};
-        String[] oddisha = new String[]{"bhubaneswar", "cuttack", "rourkela", "puri", "sambalpur"};
-        String[] punjab = new String[]{"amritsar", "patiala", "jalandhar", "ludhiana", "mohali"};
-        String[] rajasthan = new String[]{"jaipur", "jodhpur", "udaipur", "jaisalmer", "ajmer", "bikaner", "kota", "pushkar", "alwar",
-                "chhitorgarh", "bundi"};
-        String[] sikkim = new String[]{"gangtok", "namchi", "nayabajar", "rangpo", "rhenak"};
-        String[] tamilnadu = new String[]{"chennai", "madurai", "coimbatore", "tiruchirappali", "salem", "vellore", "thanjavur"};
-        String[] telangana = new String[]{"hyderabad", "warangal", "adilabad", "karimnagar", "khammam", "nalgonda", "nizamabad"};
-        String[] tripura = new String[]{"agartala", "udaipur", "dharmanagar"};
+                "muzaffarpur", "saharsha", "begusarai"};
+
+        String[] chhattisgarh = new String[]{"raipur", "bilaspur", "bastar"};
+        String[] goa = new String[]{"panaji", "ponda"};
+        String[] gujrat = new String[]{"ahmedabad", "surat", "vadodra", "rajkot", "gandhinagar", "porbandar", "dwarka"};
+        String[] haryana = new String[]{"karnal", "rohtak", "panipat"};
+        String[] himachal = new String[]{"shimla", "dharamshala", "kullu manali"};
+        String[] jammu = new String[]{"jammu", "kashmir", "sonamarg", "amarnath"};
+        String[] jharkhand = new String[]{"ranchi", "jamshedpur", "deoghar", "bokaro"};
+        String[] karnataka = new String[]{"bengaluru", "hampi", "mangalore"};
+        String[] kerela = new String[]{"thiruvananthapuram", "kochi"};
+        String[] madhya = new String[]{"bhopal", "indore", "gwalior", "ujjain"};
+        String[] maharastra = new String[]{"mumbai", "aurangabad", "pune", "nagpur", "nashik", "khandala", "thane"};
+        String[] manipur = new String[]{"imphal", "kakching"};
+        String[] meghayala = new String[]{"shillong", "cherrapunji"};
+        String[] mizoram = new String[]{"aizwal", "champhai"};
+        String[] nagaland = new String[]{"kohima"};
+        String[] oddisha = new String[]{"bhubaneswar", "cuttack", "rourkela"};
+        String[] punjab = new String[]{"amritsar", "patiala", "jalandhar", "ludhiana"};
+        String[] rajasthan = new String[]{"jaipur", "jodhpur", "udaipur", "jaisalmer", "ajmer", "bikaner", "kota", "pushkar", "alwar", "chhitorgarh"};
+        String[] sikkim = new String[]{"gangtok"};
+        String[] tamilnadu = new String[]{"chennai", "madurai", "coimbatore", "tiruchirappali", "vellore"};
+        String[] telangana = new String[]{"hyderabad", "warangal"};
+        String[] tripura = new String[]{"agartala", "udaipur"};
         String[] uttarpradesh = new String[]{"lucknow", "prayagraj", "kanpur", "agra", "aligarh", "bareilly", "jhansi", "mathura",
-                "jaunpur", "firozabad", "fatehpur sikri", "gorakhpur", "vrindavan", "mirzapur", "ghaziabad", "meerut", "saharanpur", "muzzafarnagar",
-                "noida", "unnao", "kashganj", "ghazipur", "ballia", "pilibhit", "raebareli"};
-        String[] uttarakhand = new String[]{"dehradun", "haridwar", "kashipur", "roorkee", "haldwani"};
+                "jaunpur", "firozabad", "fatehpur sikri", "gorakhpur", "vrindavan", "mirzapur", "ghaziabad"};
+        String[] uttarakhand = new String[]{"dehradun", "haridwar", "kashipur", "roorkee"};
         String[] westbengal = new String[]{"kolkata", "asansol", "siliguri", "durgapur", "haldia", "darjeeling", "malda", "kharagpur",
-                "jalpaiguri", "birbhum", "bishnupur", "chandannagar", "howrah", "kalimpong", "santhia", "bolpur", "bardhaman",
-                "murshidabad", "purulia", "serampore", "kalyani"};
+                "jalpaiguri", "birbhum", "bishnupur", "chandannagar", "howrah", "bardhaman"};
         String[] andman = new String[]{"port blair", "neil island", "ross island", "diglipur", "mayabunder"};
         String[] chandigarh = new String[]{"chandigarh"};
-        String[] dadra = new String[]{"silavasa", "dadra", "naroli", "vapi", "amli"};
+        String[] dadra = new String[]{"silavasa"};
         String[] daman = new String[]{"daman", "diu"};
-        String[] lakshadweep = new String[]{"kavaratti", "minicoy island", "amini"};
+        String[] lakshadweep = new String[]{"kavaratti"};
         String[] delhi = new String[]{"delhi"};
-        String[] pondicherry = new String[]{"pudducherry", "mahe", "karaikal", "yanam", "villianpur"};
+        String[] pondicherry = new String[]{"pudducherry", "mahe", "karaikal", "yanam"};
 
         cityArrayList.add(andhra);
         cityArrayList.add(arunachal);
@@ -173,5 +231,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
 
     }
+
+
 
 }

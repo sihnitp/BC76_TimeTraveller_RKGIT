@@ -69,7 +69,7 @@ public class ExplorerCityActivity extends AppCompatActivity {
                 "muzaffarpur", "saharsha", "begusarai"};
 
         String[] chhattisgarh = new String[]{"raipur", "bilaspur", "bastar"};
-        String[] goa = new String[]{"vasco da gama", "panaji", "ponda"};
+        String[] goa = new String[]{"panaji", "ponda"};
         String[] gujrat = new String[]{"ahmedabad", "surat", "vadodra", "rajkot", "gandhinagar", "porbandar", "dwarka"};
         String[] haryana = new String[]{"karnal", "rohtak", "panipat"};
         String[] himachal = new String[]{"shimla", "dharamshala", "kullu manali"};

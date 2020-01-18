@@ -2,11 +2,11 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:id="@+id/root_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -73,16 +73,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".explore.ExploreActivity">
-    <TextView
-        android:text="@string/about_city"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="28dp"
+        android:weightSum="10"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/about_city"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:layout_weight="9"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/text_to_speech_image"
+            android:src="@drawable/text_to_speech"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:selectableItemBackground"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/city_description"
         android:layout_width="match_parent"
@@ -130,8 +149,8 @@
             app:sliderIndicatorRadius="2dp"
             app:sliderIndicatorSelectedColor="#5A5A5A"
             app:sliderIndicatorUnselectedColor="@android:color/darker_gray"
-            app:sliderScrollTimeInSec="600"
-            app:sliderStartAutoCycle="false" />
+            app:sliderScrollTimeInSec="2"
+            app:sliderStartAutoCycle="true" />
 
     </androidx.cardview.widget.CardView>
 

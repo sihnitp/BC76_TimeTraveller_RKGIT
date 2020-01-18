@@ -153,7 +153,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                     Uri contentUri = Uri.fromFile(f);
                     imageView.setImageURI(contentUri);
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentUri);
-                     //processImage(contentUri);
+                     processImage(contentUri);
 
             }catch (NullPointerException e){
                 Log.i("TAG", e.getMessage());
@@ -167,7 +167,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                 Uri uri = data.getData();
                 Picasso.get().load(uri).into(imageView);
                 Log.i("TAG", "inside image uri");
-                //   processImage(uri);
+                   processImage(uri);
             }catch (NullPointerException e){
                 Toast.makeText(getActivity(), "Image not selected", Toast.LENGTH_SHORT).show();
             }
@@ -189,37 +189,43 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-//           FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
            FirebaseVisionCloudLandmarkDetector detector = FirebaseVision.getInstance()
                  .getVisionCloudLandmarkDetector(options);
 
+        final StringBuilder builder = new StringBuilder();
          Task<List<FirebaseVisionCloudLandmark>> result = detector.detectInImage(image)
                  .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionCloudLandmark>>() {
                      @Override
                      public void onSuccess(List<FirebaseVisionCloudLandmark> firebaseVisionCloudLandmarks) {
+                         int count=0;
                          for (FirebaseVisionCloudLandmark landmark: firebaseVisionCloudLandmarks) {
-
+                             if(count==1){
+                                 break;
+                             }
                              Rect bounds = landmark.getBoundingBox();
                              String landmarkName = landmark.getLandmark();
                              String entityId = landmark.getEntityId();
                              float confidence = landmark.getConfidence();
                              Log.i("TAG", "inside success");
                              int cnt=0;
-                             StringBuilder builder = new StringBuilder();
+                             builder.append(landmarkName);
+                             builder.append("\n");
+                             count++;
 
-                             for (FirebaseVisionLatLng loc: landmark.getLocations()) {
-                                 if(cnt==2){ break; }
-                                 double latitude = loc.getLatitude();
-                                 double longitude = loc.getLongitude();
-                                 cnt++;
+//                             for (FirebaseVisionLatLng loc: landmark.getLocations()) {
+//                                 if(cnt==2){ break; }
+//                                 double latitude = loc.getLatitude();
+//                                 double longitude = loc.getLongitude();
+//                                 cnt++;
 //                                 Log.i("TAG", "landmark name : "+landmarkName);
 //                                 Log.i("TAG", "entityid : "+entityId);
 //                                 Log.i("TAG", "confidence : "+confidence);
 //                                 Log.i("TAG", "latitude : "+latitude);
 //                                 Log.i("TAG", "longitude  : "+longitude);
-                                 builder.append(landmarkName);
-                                 builder.append("\n");
-                             }
+//
+//                                 builder.append(landmarkName);
+//                                 builder.append("\n");
+//                             }
                              if(builder.toString().length()==0){
                                  textView.setText("Not Found");
                              }else{

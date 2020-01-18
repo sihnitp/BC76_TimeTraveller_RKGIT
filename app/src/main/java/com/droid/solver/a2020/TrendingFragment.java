@@ -29,9 +29,11 @@ public class TrendingFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+
     public static TrendingFragment getInstance(){
         return  new TrendingFragment();
     }
+
     public TrendingFragment() {}
 
 
