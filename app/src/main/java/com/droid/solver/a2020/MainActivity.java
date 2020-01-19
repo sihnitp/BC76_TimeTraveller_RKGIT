@@ -12,13 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.Toast;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
-
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
@@ -91,6 +89,15 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 break;
             case R.id.share:
                 showMessage("Share");
+                break;
+            case R.id.scheme:
+                startActivity(new Intent(MainActivity.this,GovernmentSchemeActivity.class));
+                break;
+            case R.id.cultural_video:
+                startActivity(new Intent(MainActivity.this,CulturalActivity.class));
+                break;
+            case R.id.kids:
+                startActivity(new Intent(MainActivity.this,KidsActivity.class));
                 break;
             case R.id.translate:
                 popupMenu.show();

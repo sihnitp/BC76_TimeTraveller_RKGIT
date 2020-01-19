@@ -121,6 +121,7 @@ public class AddPlacesActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void uploadSelectedImage(){
+        
         progressBar.setVisibility(View.VISIBLE);
         final StorageReference reference=rootRef.child("addplace").child(UUID.randomUUID().toString());
         UploadTask uploadTask = reference.putBytes(selectedImageData);

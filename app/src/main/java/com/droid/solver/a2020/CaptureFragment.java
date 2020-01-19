@@ -43,6 +43,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +86,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
     private static final int CAMERA_PERMISSION_CODE=13;
     private static final int REQUEST_IMAGE_CAPTURE=14;
     private ProgressDialog progressDialog;
+    private ProgressBar progressBar;
 
     public static  CaptureFragment getInstance(){
         return new CaptureFragment();
@@ -104,6 +106,8 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
         cardView=view.findViewById(R.id.cardView);
         textView=view.findViewById(R.id.textShown);
         imageView=view.findViewById(R.id.image);
+        progressBar=view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
         progressDialog=new ProgressDialog(getActivity());
         cardView.setOnClickListener(this);
     }
@@ -148,7 +152,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
 
         if(requestCode==REQUEST_IMAGE_CAPTURE && resultCode==RESULT_OK){
             try{
-
+                progressBar.setVisibility(View.VISIBLE);
                     File f = new File(currentPhotoPath);
                     Uri contentUri = Uri.fromFile(f);
                     imageView.setImageURI(contentUri);
@@ -157,18 +161,23 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
 
             }catch (NullPointerException e){
                 Log.i("TAG", e.getMessage());
-            }catch (IOException e){
+                progressBar.setVisibility(View.GONE);
+            }
+            catch (IOException e){
+                progressBar.setVisibility(View.GONE);
                 Log.i("TAG", "IOException occured");
             }
         }
 
         else if(requestCode==PICK_IMAGE){
             try {
+                progressBar.setVisibility(View.VISIBLE);
                 Uri uri = data.getData();
                 Picasso.get().load(uri).into(imageView);
                 Log.i("TAG", "inside image uri");
                    processImage(uri);
             }catch (NullPointerException e){
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Image not selected", Toast.LENGTH_SHORT).show();
             }
         }
@@ -187,6 +196,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
             image = FirebaseVisionImage.fromFilePath(getActivity(), uri);
         } catch (Exception e) {
             e.printStackTrace();
+            progressBar.setVisibility(View.GONE);
         }
 
            FirebaseVisionCloudLandmarkDetector detector = FirebaseVision.getInstance()
@@ -231,6 +241,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              }else{
                                  textView.setText(builder.toString());
                              }
+                             progressBar.setVisibility(View.GONE);
 
                          }
                      }
@@ -239,11 +250,13 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                      @Override
                      public void onFailure(@NonNull Exception e) {
                          Log.i("TAG", "inside exception ,"+e.getMessage());
+                         progressBar.setVisibility(View.GONE);
                      }
                  }).addOnCanceledListener(new OnCanceledListener() {
                      @Override
                      public void onCanceled() {
                          Log.i("TAG", "cancelled ");
+                         progressBar.setVisibility(View.GONE);
                      }
                  })
                  ;
@@ -275,10 +288,8 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
     }
 
     private void clickPicture() {
-
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+        if (getActivity()!=null && takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -293,6 +304,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
             }
         }else{
             Toast.makeText(getActivity(), "no camera app", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
         }
     }
 

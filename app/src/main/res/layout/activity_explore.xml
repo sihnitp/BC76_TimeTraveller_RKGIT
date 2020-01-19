@@ -75,7 +75,7 @@
     tools:context=".explore.ExploreActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="30dp"
         android:weightSum="10"
         android:orientation="horizontal">
         <TextView
@@ -84,6 +84,7 @@
             android:textSize="20sp"
             android:layout_weight="9"
             android:layout_marginEnd="8dp"
+            android:gravity="top|start"
             android:fontFamily="sans-serif-black"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -93,13 +94,13 @@
             android:id="@+id/text_to_speech_image"
             android:src="@drawable/text_to_speech"
             android:layout_width="0dp"
-            android:layout_gravity="center"
             android:clickable="true"
+            android:padding="1dp"
             android:focusable="true"
             android:background="?android:selectableItemBackground"
-            android:layout_marginTop="3dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
+
     </LinearLayout>
 
     <TextView
@@ -242,6 +243,13 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/explore_extra_item"/>
+    </LinearLayout>
+
 </LinearLayout>
 </androidx.cardview.widget.CardView>
 </androidx.core.widget.NestedScrollView>

@@ -18,15 +18,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.droid.solver.MapsActivity;
 import com.droid.solver.a2020.DetailActivity;
 import com.droid.solver.a2020.MainActivity;
 import com.droid.solver.a2020.PhysicalArtifactsModel;
 import com.droid.solver.a2020.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.OnInitListener {
+public class ExploreActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnClickListener {
 
     private CoordinatorLayout rootLayout;
     private SliderView sliderView;
@@ -63,7 +70,8 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
     private String globalCityDescription="",globalCityCulture="",globalCitySkills="";
     private String globalCityArtificats="";
     private boolean isPlaying=false;
-
+    private TextInputEditText inputEditText;
+    private MaterialButton submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,30 +85,33 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
 
     }
 
-    public void init(){
-        sliderView=findViewById(R.id.imageSlider);
-        toolbar=findViewById(R.id.toolbar);
+    public void init() {
+        sliderView = findViewById(R.id.imageSlider);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.translator_menu);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        imageView=findViewById(R.id.text_to_speech_image);
-        cityImage=findViewById(R.id.city_image);
-        cityTitle=findViewById(R.id.city_title);
-        cityDescription=findViewById(R.id.city_description);
-        practicesImages=findViewById(R.id.practices_images);
-        practicesDescription=findViewById(R.id.practices_description);
-        skillImages=findViewById(R.id.skill_image);
-        skillDescription=findViewById(R.id.skill_description);
-        progressDialog=new ProgressDialog(this,R.style.progress_dialog);
-        root=findViewById(R.id.root);
+        inputEditText = findViewById(R.id.text_input_edit_text);
+        submitButton = findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(this);
+        imageView = findViewById(R.id.text_to_speech_image);
+        cityImage = findViewById(R.id.city_image);
+        cityTitle = findViewById(R.id.city_title);
+        cityDescription = findViewById(R.id.city_description);
+        practicesImages = findViewById(R.id.practices_images);
+        practicesDescription = findViewById(R.id.practices_description);
+        skillImages = findViewById(R.id.skill_image);
+        skillDescription = findViewById(R.id.skill_description);
+        progressDialog = new ProgressDialog(this, R.style.progress_dialog);
+        root = findViewById(R.id.root);
         root.setVisibility(View.GONE);
-        cityCard=findViewById(R.id.card_view);
-        practicesCard=findViewById(R.id.practices_card);
-        skillCard=findViewById(R.id.skills_card);
-        rootLayout=findViewById(R.id.root_layout);
-        final CollapsingToolbarLayout collapsingToolbarLayout =  findViewById(R.id.collapsing_toolbar);
+        cityCard = findViewById(R.id.card_view);
+        practicesCard = findViewById(R.id.practices_card);
+        skillCard = findViewById(R.id.skills_card);
+        rootLayout = findViewById(R.id.root_layout);
+        final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -115,10 +126,10 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbarLayout.setTitle(cityName);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        collapsingToolbarLayout.setExpandedTitleTextColor(getResources().getColorStateList(R.color.white,null));
+                        collapsingToolbarLayout.setExpandedTitleTextColor(getResources().getColorStateList(R.color.white, null));
                     }
                     isShow = true;
-                } else if(isShow) {
+                } else if (isShow) {
                     collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
@@ -130,13 +141,13 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isPlaying){
+                if (isPlaying) {
                     tts.stop();
                     tts.shutdown();
-                    isPlaying=false;
-                }else{
+                    isPlaying = false;
+                } else {
                     makeSpeak();
-                    isPlaying=true;
+                    isPlaying = true;
                 }
             }
         });
@@ -553,6 +564,7 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                Log.i("TAG", "error occured ,"+e.getMessage());
                                 Log.i("TAG", "error occured in translation");
                             }
                         });
@@ -566,6 +578,7 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
         int status=tts.speak(string,TextToSpeech.QUEUE_FLUSH,null);
         if(status==TextToSpeech.ERROR){
             Log.i("TAG", "Error in converting text to speech");
+            Log.i("TAG", "error in converting ");
             showSnackBar("Error occured in generating sound");
         }
     }
@@ -592,10 +605,52 @@ public class ExploreActivity extends AppCompatActivity  implements TextToSpeech.
 
     private void makeSpeak(){
 
-        String string="Welcome to the "+cityName+" city."+" Let me guide you through the city ."+globalCityDescription+". " +
-                "In this city ,there are some physical artifacts ,like "+globalCityArtificats+"."+"this city  have some also popular culture"+
-                ","+globalCityCulture+" . "+cityName+" also famous for some skill  like "+globalCitySkills;
+        String string="Welcome to the "+cityName+""+"Here is the brief info about the city as "+globalCityDescription+". " +
+                "Now ,have a look on the physical artefacts around "+cityName+" as "+globalCityArtificats+"."
+                +"Let me aware you to the culture of "+cityName+"  as "+
+                ","+globalCityCulture+" . "+cityName+" talking about the skills "+globalCitySkills;
         speakOut(string);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if(view.getId()==R.id.submit_button) {
+            showProgressDialog();
+
+            if (inputEditText.getText()==null||inputEditText.getText().length() == 0) {
+                Snackbar.make(rootLayout, "Please enter your suggestion", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+
+            String suggestion = inputEditText.getText().toString();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("suggestion");
+            String uid = FirebaseAuth.getInstance().getUid();
+
+            if(uid!=null) {
+                reference.child(uid).setValue(suggestion).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        Snackbar.make(rootLayout, "Thanks for your suggestion", Snackbar.LENGTH_SHORT).show();
+                        inputEditText.setText("");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Snackbar.make(rootLayout, "Error occured,try again after some time ", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            else{
+                Snackbar.make(rootLayout, "Please sign in first",Snackbar.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }
+
 
     }
 }

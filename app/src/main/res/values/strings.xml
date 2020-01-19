@@ -22,5 +22,6 @@ classified in different categories like state wise, latest trends.</string>
     <string name="practices"><u>Practices/Culture</u></string>
     <string name="skills"><u>Skills/Knowledge</u></string>
     <string name="YOUR_GOOGLE_MAP_API_KEY">AIzaSyAGYsCostzVQhsi0HMK6lJ54DolyDvr2FU</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
