@@ -32,8 +32,8 @@ private int RC_SIGN_IN=101;
         if(user!=null){
             startActivity(new Intent(this,MainActivity.class));
             finish();
-        }else {
-
+        }
+        else {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
@@ -60,6 +60,7 @@ private int RC_SIGN_IN=101;
                     String uid = user.getUid();
                     reference.child(uid).child("name").setValue(user.getDisplayName());
                     reference.child(uid).child("email").setValue(user.getEmail());
+                    //TODO : take url of user and show in navigation view of drawer layout in MainActivity
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 }

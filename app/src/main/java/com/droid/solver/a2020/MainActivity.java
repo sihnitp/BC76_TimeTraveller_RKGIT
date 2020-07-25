@@ -1,17 +1,28 @@
 package com.droid.solver.a2020;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,8 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
-public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
     private ViewPager viewPager;
     private TabLayout tablayout;
     private Toolbar toolbar;
@@ -37,13 +51,36 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        navigationView.setNavigationItemSelectedListener(this);
         preferences=this.getSharedPreferences(preferenceName,MODE_PRIVATE);
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        actionBarDrawerToggle.syncState();
     }
 
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
+        drawerLayout=findViewById(R.id.drawer_layout);
+        navigationView=findViewById(R.id.navigation_view);
+        actionBarDrawerToggle=new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+
+
         tablayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(),
@@ -79,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-
+        if(actionBarDrawerToggle.onOptionsItemSelected(item))return true;
         switch (item.getItemId()){
             case R.id.add_place:
                 startActivity(new Intent(this,AddPlacesActivity.class));
@@ -146,11 +183,11 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 });
                 break;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     private void showMessage(String s){
-        Snackbar.make(coordinatorLayout, "Language switched to "+s ,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, s+" is clicked" ,Snackbar.LENGTH_SHORT).show();
     }
 
     public void addCityToList() {
@@ -239,6 +276,25 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.first:
+                showMessage("First");
+                break;
+            case R.id.second:
+                showMessage("Second");
+                break;
+            case R.id.third:
+                showMessage("Third");
+                break;
+            default :
+                return true;
+        }
+        drawerLayout.closeDrawers();
+        return true;
+    }
 
 
 }
