@@ -281,7 +281,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.first:
-                showMessage("First");
+                Intent intent=new Intent(MainActivity.this, guideRegistration.class);
+                startActivity(intent);
+
                 break;
             case R.id.second:
                 showMessage("Second");

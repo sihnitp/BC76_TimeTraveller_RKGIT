@@ -25,5 +25,11 @@ classified in different categories like state wise, latest trends.</string>
     <string name="title_activity_maps">Map</string>
     <string name="close">Close</string>
     <string name="open">Open</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Transgender</item>
+    </string-array>
+
 
 </resources>
