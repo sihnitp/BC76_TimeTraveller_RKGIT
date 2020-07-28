@@ -19,15 +19,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import drawerItems.GuideRegistrationActivity;
+import drawerItems.HotelsActivity;
+import drawerItems.TravelActivity;
+
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -80,6 +89,13 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
 
+        View view=navigationView.getHeaderView(0);
+        TextView userName=view.findViewById(R.id.user_name);
+        ImageView userImage=view.findViewById(R.id.user_image);
+        SharedPreferences preferences=getSharedPreferences(LoginActivity.MY_PREF, MODE_PRIVATE);
+        userName.setText(preferences.getString(LoginActivity.NAME, " "));
+        Picasso.get().load(preferences.getString(LoginActivity.PHOTO_URL, "no_url")).into(userImage);
+
 
         tablayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
@@ -126,15 +142,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 break;
             case R.id.share:
                 showMessage("Share");
-                break;
-            case R.id.scheme:
-                startActivity(new Intent(MainActivity.this,GovernmentSchemeActivity.class));
-                break;
-            case R.id.cultural_video:
-                startActivity(new Intent(MainActivity.this,CulturalActivity.class));
-                break;
-            case R.id.kids:
-                startActivity(new Intent(MainActivity.this,KidsActivity.class));
                 break;
             case R.id.translate:
                 popupMenu.show();
@@ -281,15 +288,28 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.first:
+<<<<<<< HEAD
                 Intent intent=new Intent(MainActivity.this, guideRegistration.class);
                 startActivity(intent);
 
+=======
+                startActivity(new Intent(MainActivity.this,CulturalActivity.class));
+>>>>>>> 40ce577da1ae77feb8ee1f3befe83c98765a86c6
                 break;
             case R.id.second:
-                showMessage("Second");
+                startActivity(new Intent(MainActivity.this,GovernmentSchemeActivity.class));
                 break;
             case R.id.third:
-                showMessage("Third");
+                startActivity(new Intent(MainActivity.this,KidsActivity.class));
+                break;
+            case R.id.fourth:
+                startActivity(new Intent(MainActivity.this, TravelActivity.class));
+                break;
+            case R.id.fifth:
+                startActivity(new Intent(MainActivity.this, HotelsActivity.class));
+                break;
+            case R.id.sixth:
+                startActivity(new Intent(MainActivity.this, GuideRegistrationActivity.class));
                 break;
             default :
                 return true;

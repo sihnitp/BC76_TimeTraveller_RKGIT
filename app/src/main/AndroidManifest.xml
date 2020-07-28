@@ -22,9 +22,15 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".guideProfile"></activity>
         <activity android:name=".guideList" />
         <activity android:name=".guideRegistration" />
+=======
+        <activity android:name="drawerItems.GuideRegistrationActivity"></activity>
+        <activity android:name="drawerItems.TravelActivity" />
+        <activity android:name="drawerItems.HotelsActivity" />
+>>>>>>> 40ce577da1ae77feb8ee1f3befe83c98765a86c6
         <activity android:name=".GovernmentSchemeActivity" />
         <activity android:name=".CulturalActivity" />
         <activity android:name=".VideoPlayerActivity" />

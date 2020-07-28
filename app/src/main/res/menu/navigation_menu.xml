@@ -5,16 +5,35 @@
 
         <item
             android:id="@+id/first"
+<<<<<<< HEAD
             android:icon="@drawable/ic_gallery"
             android:title="Guide Registration" />
         <item
             android:id="@+id/second"
             android:icon="@drawable/ic_gallery"
             android:title="Booking" />
+=======
+            android:title="Cultural Video" />
+        <item
+            android:id="@+id/second"
+            android:title="Government Scheme" />
+>>>>>>> 40ce577da1ae77feb8ee1f3befe83c98765a86c6
         <item
             android:id="@+id/third"
-            android:icon="@drawable/ic_gallery"
-            android:title="Third Item" />
+            android:title="Kids Section" />
+
+        <item
+            android:id="@+id/fourth"
+            android:title="Travel" />
+        <item
+            android:id="@+id/fifth"
+            android:title="Stay/Hotels" />
+        <item
+            android:id="@+id/sixth"
+            android:title="Register as guide" />
+
+
+
     </group>
 
 </menu>
