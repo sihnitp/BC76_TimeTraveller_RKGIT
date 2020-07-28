@@ -22,7 +22,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".guideRegistration"></activity>
+        <activity android:name=".guideProfile"></activity>
+        <activity android:name=".guideList" />
+        <activity android:name=".guideRegistration" />
         <activity android:name=".GovernmentSchemeActivity" />
         <activity android:name=".CulturalActivity" />
         <activity android:name=".VideoPlayerActivity" />

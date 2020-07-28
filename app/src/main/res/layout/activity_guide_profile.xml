@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".guideProfile">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                android:layout_height="320dp"
+                android:id="@+id/card1"
+                android:layout_centerHorizontal="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                app:cardCornerRadius="8dp"
+
+                android:layout_marginRight="16dp"
+                android:id="@+id/card2"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card1"
+                app:cardBackgroundColor="#19000000"
+                >
+                <TextView
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="4dp"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:text="Name: ABC\nAge: 30\n Gender : Male\n Highest Qualification: Graduate in archeology"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                android:layout_marginStart="16dp"
+                app:cardBackgroundColor="#3F51B5"
+                android:layout_marginEnd="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/card3"
+
+                android:layout_below="@+id/card2">
+
+                <TextView
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Email me"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                android:layout_marginStart="16dp"
+                app:cardBackgroundColor="#ffffff"
+                android:layout_marginEnd="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/card4"
+
+                android:layout_below="@+id/card3">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="About"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_below="@+id/text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="I love to travel a lot and meet new people. Travelling is my passion and
+ther is nothing more fulfilling to me than the smell of a new place, the sounds of a new
+city\n"
+                        android:textStyle="italic"
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_below="@+id/text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="#000000"
+                        android:text="Charges : 50 USD/person"/></RelativeLayout>
+            </androidx.cardview.widget.CardView></LinearLayout>
+    </ScrollView>
+</RelativeLayout>

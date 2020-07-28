@@ -24,6 +24,7 @@ import com.droid.solver.a2020.DetailActivity;
 import com.droid.solver.a2020.MainActivity;
 import com.droid.solver.a2020.PhysicalArtifactsModel;
 import com.droid.solver.a2020.R;
+import com.droid.solver.a2020.guideList;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,7 +56,11 @@ import java.util.List;
 import java.util.Locale;
 
 public class ExploreActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, View.OnClickListener {
+    public void sendMessage(View view) {
+            Intent myIntent = new Intent(view.getContext(), guideList.class);
+            startActivityForResult(myIntent, 0);
 
+    }
     private CoordinatorLayout rootLayout;
     private SliderView sliderView;
     private Toolbar toolbar;
@@ -650,6 +655,7 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
                 progressDialog.dismiss();
             }
         }
+
 
 
     }
