@@ -76,6 +76,7 @@
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="Email me"
+                    android:onClick="emailActivity"
                     android:textAlignment="center"
                     android:textColor="#ffffff" />
             </androidx.cardview.widget.CardView>
