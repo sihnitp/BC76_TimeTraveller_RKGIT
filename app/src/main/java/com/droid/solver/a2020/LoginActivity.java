@@ -2,12 +2,15 @@ package com.droid.solver.a2020;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.PendingIntentRequiredException;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,7 +21,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-private int RC_SIGN_IN=101;
+    private int RC_SIGN_IN=101;
+
+    public static final String MY_PREF="MY_PREF";
+    public static final String NAME="NAME";
+    public static final String EMAIL="EMAIL";
+    public static final String PHOTO_URL="PHOTO_URL";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +69,15 @@ private int RC_SIGN_IN=101;
                     String uid = user.getUid();
                     reference.child(uid).child("name").setValue(user.getDisplayName());
                     reference.child(uid).child("email").setValue(user.getEmail());
-                    //TODO : take url of user and show in navigation view of drawer layout in MainActivity
+
+
+                    SharedPreferences preferences =getSharedPreferences(MY_PREF, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=  preferences.edit();
+                    editor.putString(NAME, user.getDisplayName());
+                    editor.putString(EMAIL, user.getEmail());
+                    editor.putString(PHOTO_URL, user.getPhotoUrl().toString());
+                    editor.apply();
+
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 }
