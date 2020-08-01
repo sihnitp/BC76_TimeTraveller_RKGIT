@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -79,14 +80,16 @@ import static android.content.Context.CAMERA_SERVICE;
 public class CaptureFragment extends Fragment implements View.OnClickListener {
 
     private static final int PICK_IMAGE = 51;
-    private CardView cardView;
+    private CardView cardView,bottomCardView;
     String currentPhotoPath;
-    private TextView textView;
+    private TextView monumentDetails,indicator;
     private ImageView imageView;
     private static final int CAMERA_PERMISSION_CODE=13;
     private static final int REQUEST_IMAGE_CAPTURE=14;
     private ProgressDialog progressDialog;
     private ProgressBar progressBar;
+    private ImageView trackLocationImage;
+    private String trackLocationUrl;
 
     public static  CaptureFragment getInstance(){
         return new CaptureFragment();
@@ -104,18 +107,38 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
 
     private void init(View view){
         cardView=view.findViewById(R.id.cardView);
-        textView=view.findViewById(R.id.textShown);
+        monumentDetails=view.findViewById(R.id.textShown);
         imageView=view.findViewById(R.id.image);
+        trackLocationImage=view.findViewById(R.id.track_location);
+        indicator=view.findViewById(R.id.details);
+        bottomCardView=view.findViewById(R.id.cardView2);
+        bottomCardView.setVisibility(View.INVISIBLE);
         progressBar=view.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.GONE);
+        trackLocationImage.setVisibility(View.INVISIBLE);
         progressDialog=new ProgressDialog(getActivity());
+        indicator.setText("Please Select Or Click The Monument Image");
         cardView.setOnClickListener(this);
+        trackLocationImage.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.cardView||view.getId()==R.id.image){
             checkPermission();
+        }
+        else if(view.getId()==R.id.track_location){
+            Toast.makeText(getActivity(), "Redirected to Map ,please wait ...", Toast.LENGTH_SHORT).show();
+            Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                            Uri.parse(trackLocationUrl));
+                    startActivity(intent);
+                }
+            }, 1000);
+
         }
     }
 
@@ -156,24 +179,23 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                     File f = new File(currentPhotoPath);
                     Uri contentUri = Uri.fromFile(f);
                     imageView.setImageURI(contentUri);
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentUri);
+                     bottomCardView.setVisibility(View.VISIBLE);
                      processImage(contentUri);
 
             }catch (NullPointerException e){
                 Log.i("TAG", e.getMessage());
                 progressBar.setVisibility(View.GONE);
             }
-            catch (IOException e){
-                progressBar.setVisibility(View.GONE);
-                Log.i("TAG", "IOException occured");
-            }
+
         }
 
         else if(requestCode==PICK_IMAGE){
+            bottomCardView.setVisibility(View.VISIBLE);
             try {
                 progressBar.setVisibility(View.VISIBLE);
                 Uri uri = data.getData();
-                Picasso.get().load(uri).into(imageView);
+                imageView.setImageURI(uri);
+//                Picasso.get().load(uri).into(imageView);
                 Log.i("TAG", "inside image uri");
                    processImage(uri);
             }catch (NullPointerException e){
@@ -236,10 +258,22 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
 //                                 builder.append(landmarkName);
 //                                 builder.append("\n");
 //                             }
+                             FirebaseVisionLatLng loc=landmark.getLocations().get(0);
+                             String base_url="http://maps.google.com/maps?";
+                             String query="daddr="+String.valueOf(loc.getLatitude())+","+String.valueOf(loc.getLongitude())+"("+
+                                     landmarkName+")";
+
+                             trackLocationUrl=base_url+query;
+                             trackLocationImage.setVisibility(View.VISIBLE);
+                             bottomCardView.setVisibility(View.VISIBLE);
+
+                             Log.i("TAG", "longitude : "+loc.getLongitude());
+                             Log.i("TAG", "latitude : "+loc.getLatitude());
+                             indicator.setText("Here's the detailed info!");
                              if(builder.toString().length()==0){
-                                 textView.setText("Not Found");
+                                 monumentDetails.setText("Not Found");
                              }else{
-                                 textView.setText(builder.toString());
+                                 monumentDetails.setText(builder.toString());
                              }
                              progressBar.setVisibility(View.GONE);
 

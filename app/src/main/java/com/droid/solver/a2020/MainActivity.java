@@ -36,7 +36,8 @@ import drawerItems.TravelActivity;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
-public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener,
+                                                NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         listOfCity=new ArrayList<>();
         coordinatorLayout=findViewById(R.id.coordinator);
         toolbar.setOnMenuItemClickListener(this);
+
         Thread thread=new Thread(){
             @Override
             public void run() {
@@ -148,38 +150,39 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                         SharedPreferences.Editor editor=preferences.edit();//false for english
                         switch (menuItem.getItemId()){
                             case R.id.bengali:
-                                showMessage("Bengali");
+                                showMessage("Language Swithced to Bengali");
                                 editor.putInt(lan, 0);
                                 editor.apply();
                                 break;
                             case R.id.english:
-                                showMessage("English");
+                                showMessage("Language Swithced to English");
                                 editor.putInt(lan, 1);
                                 editor.apply();
                                 break;
                             case R.id.hindi:
-                                showMessage("Hindi");
+                                showMessage("Language Swithced to Hindi");
                                 editor.putInt(lan, 2);
                                 editor.apply();
                                 break;
                             case R.id.marathi:
-                                showMessage("Marathi");
+                                showMessage("Language Swithced to Marathi");
                                 editor.putInt(lan, 3);
                                 editor.apply();
                                 break;
                             case R.id.tamil:
-                                showMessage("Tamil");
+                                showMessage("Language Swithced to Tamil");
                                 editor.putInt(lan, 4);
                                 editor.apply();
                                 break;
                             case R.id.telugu:
-                                showMessage("Telugu");
+                                showMessage("Language Swithced to Telugu");
                                 editor.putInt(lan, 5);
                                 editor.apply();
                                 break;
                             case R.id.urdu:
-                                showMessage("Urdu");
+                                showMessage("Language Swithced to Urdu");
                                 editor.putInt(lan, 6);
+                                editor.apply();
                                 break;
                         }
                         return true;
@@ -191,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     }
 
     private void showMessage(String s){
-        Snackbar.make(coordinatorLayout, s+" is clicked" ,Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(coordinatorLayout, s+" is clicked" ,Snackbar.LENGTH_SHORT).show();
     }
 
     public void addCityToList() {
