@@ -23,7 +23,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +31,6 @@ import java.util.List;
 
 import drawerItems.GuideRegistrationActivity;
 import drawerItems.WebViewActivity;
-import drawerItems.TravelActivity;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 

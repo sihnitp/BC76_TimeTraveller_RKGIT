@@ -12,14 +12,12 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.droid.solver.MapsActivity;
 import com.droid.solver.a2020.DetailActivity;
 import com.droid.solver.a2020.MainActivity;
 import com.droid.solver.a2020.PhysicalArtifactsModel;
@@ -33,7 +31,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,8 +45,6 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOption
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -61,7 +56,7 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
     private Toolbar toolbar;
     private String state,cityName="City name";
     private ImageView cityImage,practicesImages,skillImages;
-    private TextView cityTitle,cityDescription,practicesDescription,skillDescription;
+    private TextView cityTitle,cityDescription,practicesDescription,skillDescription,needGuide;
     ProgressDialog progressDialog;
     private CardView root;
     private CardView cityCard,practicesCard,skillCard;
@@ -111,8 +106,10 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         practicesCard = findViewById(R.id.practices_card);
         skillCard = findViewById(R.id.skills_card);
         rootLayout = findViewById(R.id.root_layout);
+        needGuide=findViewById(R.id.need_guide);
         final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+        needGuide.setOnClickListener(this);
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
@@ -188,25 +185,18 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            globalCityArtificats=cityName+" have some popular pyhsical artifacts. Like ";
+            globalCityArtificats=cityName+" Have some popular pyhsical artifacts. Like ";
                 List<PhysicalArtifactsModel> artifactsList=new ArrayList<>();
 
                 for(DataSnapshot model : snapshot.child("physicalartifacts").getChildren()){
                    String key=model.getKey();
-                   Log.i("TAG", "key : "+key);
                    if(key!=null) {
 
                        String descripton = model.child("description").getValue(String.class);
                        String image = model.child("image").getValue(String.class);
 
                        String latitude="0'0";
-//                       if(model.child("latitude").getValue()!=null)
-//                           latitude = model.child(key).child("latitude").getValue(Double.class);
-
                        String longitude= "0.0";
-
-//                       if(model.child("longitude").getValue()!=null)
-//                          longitude= model.child(key).child("longitude").getValue(Double.class);
 
                        String name=model.child("name").getValue(String.class);
                        PhysicalArtifactsModel mm=new PhysicalArtifactsModel(image, descripton,latitude,longitude, name);
@@ -643,6 +633,9 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
                 Snackbar.make(rootLayout, "Please sign in first",Snackbar.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
+        }
+        else if(view.getId()==R.id.need_guide){
+
         }
 
 

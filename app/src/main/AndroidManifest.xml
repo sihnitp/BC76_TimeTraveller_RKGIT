@@ -22,8 +22,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="drawerItems.GuideRegistrationActivity"></activity>
-        <activity android:name="drawerItems.TravelActivity" />
+        <activity android:name=".explorefragment.GuideListActivity"></activity>
+        <activity android:name="drawerItems.GuideRegistrationActivity" />
         <activity android:name="drawerItems.WebViewActivity" />
         <activity android:name=".GovernmentSchemeActivity" />
         <activity android:name=".CulturalActivity" />
@@ -34,10 +34,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name="com.droid.solver.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".explorefragment.StreetViewActivity" />
         <activity
             android:name=".explorefragment.ExplorerCityActivity"
             android:parentActivityName=".MainActivity" />

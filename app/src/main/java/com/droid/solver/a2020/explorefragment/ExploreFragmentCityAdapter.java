@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.droid.solver.a2020.CONSTANT;
 import com.droid.solver.a2020.R;
 import com.droid.solver.a2020.explore.ExploreActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
@@ -18,23 +21,16 @@ public class ExploreFragmentCityAdapter extends RecyclerView.Adapter {
     private Context context;
     private LayoutInflater inflater;
     private String stateName;
-    private int [] image=new int[]{
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3,
-            R.drawable.image4,
-            R.drawable.image6,
-            R.drawable.image12,
-            R.drawable.image24,
-            R.drawable.image27,
-            R.drawable.image19,
-            R.drawable.image25,
-    };
+    private Random random;
+    int pos=0;
+
     public ExploreFragmentCityAdapter(String [] cityArray, Context context,String stateName){
         this.cityArray=cityArray;
         this.context=context;
         inflater=LayoutInflater.from(context);
         this.stateName=stateName;
+        random=new Random();
+        pos=random.nextInt(30);
     }
 
 
@@ -49,9 +45,10 @@ public class ExploreFragmentCityAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ExploreFragmentCityViewHolder){
             ((ExploreFragmentCityViewHolder) holder).cityName.setText(cityArray[position]);
-            Random random=new Random();
-            int pos=random.nextInt(image.length);
-            ((ExploreFragmentCityViewHolder) holder).imageView.setImageResource(image[pos]);
+
+            Picasso.get().load(CONSTANT.image[(pos+2)%30]).into(((ExploreFragmentCityViewHolder) holder).imageView);
+            pos+=2;
+
             ((ExploreFragmentCityViewHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

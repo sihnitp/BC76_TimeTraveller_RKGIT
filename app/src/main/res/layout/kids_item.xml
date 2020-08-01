@@ -21,7 +21,6 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="0dp"
-            android:src="@drawable/image1"
             android:scaleType="centerCrop"
             android:layout_weight="4"
             android:layout_height="match_parent"/>

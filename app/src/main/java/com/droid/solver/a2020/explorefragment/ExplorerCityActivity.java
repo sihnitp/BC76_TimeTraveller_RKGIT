@@ -10,8 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
 
+import com.droid.solver.a2020.CONSTANT;
 import com.droid.solver.a2020.ExploreFragment;
 import com.droid.solver.a2020.R;
 
@@ -22,13 +22,6 @@ public class ExplorerCityActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private String[] state = new String[]{
-            "andhra pradesh", "arunachal pradesh", "assam", "bihar", "chhattisgarh", "goa", "gujarat", "haryana", "himachal pradesh",
-            "jammu and kashmir", "jharkhand", "karnataka", "kerela", "madhya pradesh", "maharashtra", "manipur", "meghalaya", "mizoram",
-            "nagaland", "odisha", "punjab", "rajasthan", "sikkim", "tamil nadu", "telangana", "tripura", "uttar pradesh", "uttarakhand",
-            "west bengal", "andaman and nicobar islands", "chandigarh", "dadar and nagar haveli", "daman and diu", "lakshadweep",
-            "delhi", "puducherry"
-    };
 
     private List<String[]> cityArrayList;
 
@@ -42,7 +35,7 @@ public class ExplorerCityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_explorer_city);
         addCity();
         toolbar = findViewById(R.id.toolbar);
-        String cc = state[position];
+        String cc = CONSTANT.state[position];
         toolbar.setTitle(cc.substring(0, 1).toUpperCase() + cc.substring(1));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -54,7 +47,7 @@ public class ExplorerCityActivity extends AppCompatActivity {
         recyclerView.setLayoutAnimation(animation);
 
         String[] temp = ExploreFragment.capitalizeFirstLetter(cityArrayList.get(position));
-        ExploreFragmentCityAdapter adapter = new ExploreFragmentCityAdapter(temp, this, state[position]);
+        ExploreFragmentCityAdapter adapter = new ExploreFragmentCityAdapter(temp, this, CONSTANT.state[position]);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
     }

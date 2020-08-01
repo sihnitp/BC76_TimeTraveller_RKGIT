@@ -6,12 +6,11 @@ import android.os.Bundle;
 
 import com.droid.solver.a2020.R;
 
-public class StreetViewActivity extends AppCompatActivity {
+public class GuideListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_street_view);
-
+        setContentView(R.layout.activity_guide_list);
     }
 }
