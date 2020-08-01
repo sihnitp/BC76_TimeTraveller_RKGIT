@@ -234,30 +234,13 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              if(count==1){
                                  break;
                              }
-                             Rect bounds = landmark.getBoundingBox();
+
                              String landmarkName = landmark.getLandmark();
-                             String entityId = landmark.getEntityId();
-                             float confidence = landmark.getConfidence();
-                             Log.i("TAG", "inside success");
                              int cnt=0;
                              builder.append(landmarkName);
                              builder.append("\n");
                              count++;
 
-//                             for (FirebaseVisionLatLng loc: landmark.getLocations()) {
-//                                 if(cnt==2){ break; }
-//                                 double latitude = loc.getLatitude();
-//                                 double longitude = loc.getLongitude();
-//                                 cnt++;
-//                                 Log.i("TAG", "landmark name : "+landmarkName);
-//                                 Log.i("TAG", "entityid : "+entityId);
-//                                 Log.i("TAG", "confidence : "+confidence);
-//                                 Log.i("TAG", "latitude : "+latitude);
-//                                 Log.i("TAG", "longitude  : "+longitude);
-//
-//                                 builder.append(landmarkName);
-//                                 builder.append("\n");
-//                             }
                              FirebaseVisionLatLng loc=landmark.getLocations().get(0);
                              String base_url="http://maps.google.com/maps?";
                              String query="daddr="+String.valueOf(loc.getLatitude())+","+String.valueOf(loc.getLongitude())+"("+
@@ -267,12 +250,11 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              trackLocationImage.setVisibility(View.VISIBLE);
                              bottomCardView.setVisibility(View.VISIBLE);
 
-                             Log.i("TAG", "longitude : "+loc.getLongitude());
-                             Log.i("TAG", "latitude : "+loc.getLatitude());
                              indicator.setText("Here's the detailed info!");
                              if(builder.toString().length()==0){
                                  monumentDetails.setText("Not Found");
-                             }else{
+                             }
+                             else{
                                  monumentDetails.setText(builder.toString());
                              }
                              progressBar.setVisibility(View.GONE);

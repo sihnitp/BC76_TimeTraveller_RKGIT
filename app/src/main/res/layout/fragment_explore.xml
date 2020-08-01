@@ -11,6 +11,7 @@
         android:layout_width="303dp"
         android:layout_height="59dp"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         android:backgroundTint="@color/colorAccent"
         android:text="See Nearby Heritages"
         android:textAllCaps="false"
