@@ -37,28 +37,29 @@ public class GovernmentSchemeActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        list.add(new SchemeModel("Scheme of Financial Assistance under Seva Bhoj Yojna (NEW)",
-                "https://www.indiaculture.nic.in/scheme-financial-assistance-under-seva-bhoj-yojna-new"));
+        list.add(new SchemeModel("Scheme for Organizing Fair & Festival and Tourism related events (DPPH)",
+                "http://tourism.gov.in/scheme-organizing-fair-festival-and-tourism-related-events-dpph-0"));
 
-        list.add(new SchemeModel("Scheme of Financial Assistance for Promotion of Art and Culture",
-                "https://www.indiaculture.nic.in/scheme-financial-assistance-promotion-art-and-culture"));
+        list.add(new SchemeModel("Scheme for support to Public Private Partnership in Infrastructure Development",
+                "http://tourism.gov.in/scheme-support-public-private-partnership-infrastructure-development-viability-gap-undoing-0"));
 
-        list.add(new SchemeModel("Scheme of Financial Assistance for Creation of Cultural Infrastructure",
-                "https://www.indiaculture.nic.in/scheme-financial-assistance-creation-cultural-infrastructure"));
+        list.add(new SchemeModel("Scheme Guidelines for Swadesh Darshan",
+                "http://tourism.gov.in/scheme-guidelines-swadesh-darshan-0"));
 
-        list.add(new SchemeModel("Scheme of Scholarship and Fellowship for Promotion of Art and Culture",
-                "https://www.indiaculture.nic.in/scheme-scholarship-and-fellowship-promotion-art-and-culture"));
+        list.add(new SchemeModel("Revised Guidelines for Assistance to Central Agencies for Tourism Infrastructure Development",
+                "http://tourism.gov.in/revised-guidelines-assistance-central-agencies-tourism-infrastructure-development"));
 
-        list.add(new SchemeModel("Certificate of Excellence Scheme for Museum Professionals",
-                "https://www.indiaculture.nic.in/certificate-excellence-scheme-museum-professionals"));
+        list.add(new SchemeModel("Instructions regarding Financial Assistance to Institutes/Central Universities for Organizing research related events (Meetings/Conference/Workshop/Seminars).",
+                "http://tourism.gov.in/instructions-regarding-financial-assistance-institutescentral-universities-organizingresearch"));
 
-        list.add(new SchemeModel("Museum Grant Scheme","https://www.indiaculture.nic.in/museum-grant-scheme"));
+        list.add(new SchemeModel("Scheme of Capacity Building for Service Providers (Institutes)",
+                "http://tourism.gov.in/scheme-capacity-building-service-providers-institutes"));
 
-        list.add(new SchemeModel("Scheme for Pension and Medical Aid to Artistes",
-                "https://www.indiaculture.nic.in/scheme-pension-and-medical-aid-artistes"));
+        list.add(new SchemeModel("Guidelines for assistance by the Ministry of Tourism to the Tourism, Travel and Hospitality Trade Associations for their various events in India and abroad.",
+                "http://tourism.gov.in/guidelines-assistance-ministry-tourism-tourism-travel-and-hospitality-trade-associations-their"));
 
         list.add(new SchemeModel("Scheme for Promotion of Culture of Science (SPOCS)",
-                "https://www.indiaculture.nic.in/scheme-promotion-culture-science-spocs"));
+                "http://www.indiaculture.nic.in/scheme-promotion-culture-science-spocs"));
 
         list.add(new SchemeModel("Scheme for Cultural Heritage Youth Leadership Programme",
                 "https://www.indiaculture.nic.in/scheme-cultural-heritage-youth-leadership-programme"));
