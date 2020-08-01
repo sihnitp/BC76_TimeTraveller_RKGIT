@@ -2,6 +2,7 @@ package drawerItems;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebResourceRequest;
@@ -11,12 +12,15 @@ import android.webkit.WebViewClient;
 
 import com.droid.solver.a2020.R;
 
-public class HotelsActivity extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
     private WebView wb;
+    private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotels);
+        Intent intent=getIntent();
+        url=intent.getStringExtra("url");
         wb = findViewById(R.id.web_view);
         wb = (WebView) findViewById(R.id.web_view);
         wb.getSettings().setJavaScriptEnabled(true);
@@ -24,7 +28,7 @@ public class HotelsActivity extends AppCompatActivity {
         wb.getSettings().setUseWideViewPort(true);
         wb.getSettings().setBuiltInZoomControls(true);
         wb.setWebViewClient(new WebClient());
-        wb.loadUrl("https://www.oyorooms.com");
+        wb.loadUrl(url);
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

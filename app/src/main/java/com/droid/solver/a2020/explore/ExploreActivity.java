@@ -357,7 +357,6 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         Log.i("TAG", "inside download model");
 
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         englishHindiTranslator.downloadModelIfNeeded(conditions)
@@ -391,7 +390,6 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         Log.i("TAG", "inside download model");
 
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         englishHindiTranslator.downloadModelIfNeeded(conditions)
@@ -425,7 +423,6 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         Log.i("TAG", "inside download model");
 
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         englishHindiTranslator.downloadModelIfNeeded(conditions)
@@ -459,7 +456,6 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         Log.i("TAG", "inside download model");
 
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         englishHindiTranslator.downloadModelIfNeeded(conditions)
@@ -493,7 +489,6 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         Log.i("TAG", "inside download model");
 
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         englishHindiTranslator.downloadModelIfNeeded(conditions)
@@ -527,7 +522,6 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
         Log.i("TAG", "inside download model");
 
         FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         englishHindiTranslator.downloadModelIfNeeded(conditions)

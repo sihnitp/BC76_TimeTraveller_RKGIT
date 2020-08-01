@@ -10,7 +10,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,19 +21,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import drawerItems.GuideRegistrationActivity;
-import drawerItems.HotelsActivity;
+import drawerItems.WebViewActivity;
 import drawerItems.TravelActivity;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
@@ -297,10 +294,14 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 startActivity(new Intent(MainActivity.this,KidsActivity.class));
                 break;
             case R.id.fourth:
-                startActivity(new Intent(MainActivity.this, TravelActivity.class));
+                Intent intent=new Intent(MainActivity.this,WebViewActivity.class);
+                intent.putExtra("url", "https://www.olacabs.com/");
+                startActivity(intent);
                 break;
             case R.id.fifth:
-                startActivity(new Intent(MainActivity.this, HotelsActivity.class));
+                intent=new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("url", "https://www.oyorooms.com");
+                startActivity(intent);
                 break;
             case R.id.sixth:
                 startActivity(new Intent(MainActivity.this, GuideRegistrationActivity.class));

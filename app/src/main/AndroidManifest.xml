@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme">
         <activity android:name="drawerItems.GuideRegistrationActivity"></activity>
         <activity android:name="drawerItems.TravelActivity" />
-        <activity android:name="drawerItems.HotelsActivity" />
+        <activity android:name="drawerItems.WebViewActivity" />
         <activity android:name=".GovernmentSchemeActivity" />
         <activity android:name=".CulturalActivity" />
         <activity android:name=".VideoPlayerActivity" />

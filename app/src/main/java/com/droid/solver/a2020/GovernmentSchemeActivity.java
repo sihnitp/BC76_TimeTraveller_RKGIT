@@ -15,12 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.vision.text.Line;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import drawerItems.WebViewActivity;
 
 public class GovernmentSchemeActivity extends AppCompatActivity {
 
@@ -76,6 +74,7 @@ public class GovernmentSchemeActivity extends AppCompatActivity {
 
         list.add(new SchemeModel("Indian Conservation Fellowship Program (ICFP)",
                 "https://www.indiaculture.nic.in/https://indiaculture.nic.in/indian-conservation-fellowship-program-icfp"));
+
         SchemeAdapter adapter=new SchemeAdapter(this,list);
         recyclerView.setAdapter(adapter);
     }
@@ -130,9 +129,16 @@ class SchemeAdapter extends RecyclerView.Adapter{
             ((SchemeViewHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//
+//                    Intent intent=new Intent(context,WebViewActivity.class);
+//                    intent.putExtra("url", list.get(position).getUrl());
+//                    context.startActivity(intent);
+//
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(position).getUrl()));
                     Intent chooser=Intent.createChooser(browserIntent,"Choose browser to go to page");
                     context.startActivity(chooser);
+
+
                 }
             });
         }

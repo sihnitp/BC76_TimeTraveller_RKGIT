@@ -10,6 +10,7 @@ import com.droid.solver.a2020.R;
 
 public class TravelActivity extends AppCompatActivity {
     private WebView wb;
+    private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
