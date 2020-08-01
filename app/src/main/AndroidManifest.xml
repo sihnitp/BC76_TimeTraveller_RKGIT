@@ -22,7 +22,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="drawerItems.GuideRegistrationActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name="drawerItems.GuideRegistrationActivity" />
         <activity android:name="drawerItems.TravelActivity" />
         <activity android:name="drawerItems.HotelsActivity" />
         <activity android:name=".GovernmentSchemeActivity" />
