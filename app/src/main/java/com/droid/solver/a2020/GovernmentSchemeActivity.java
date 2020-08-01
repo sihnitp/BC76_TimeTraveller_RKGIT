@@ -64,9 +64,6 @@ public class GovernmentSchemeActivity extends AppCompatActivity {
         list.add(new SchemeModel("Scheme for Cultural Heritage Youth Leadership Programme",
                 "https://www.indiaculture.nic.in/scheme-cultural-heritage-youth-leadership-programme"));
 
-        list.add(new SchemeModel("Scheme for Safeguarding the Intangible Cultural Heritage",
-                "https://www.indiaculture.nic.in/scheme-safeguarding-intangible-cultural-heritage-and-diverse-cultural-traditions-india"));
-
         list.add(new SchemeModel("Scheme for Promoting International Cultural Relation ",
                 "https://www.indiaculture.nic.in/scheme-promoting-international-cultural-relations"));
 
