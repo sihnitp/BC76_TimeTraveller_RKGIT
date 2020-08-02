@@ -89,7 +89,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
     private ProgressDialog progressDialog;
     private ProgressBar progressBar;
     private ImageView trackLocationImage;
-    private String trackLocationUrl;
+    private String trackLocationUrl,destinationMonumentName;
 
     public static  CaptureFragment getInstance(){
         return new CaptureFragment();
@@ -120,7 +120,13 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
         indicator.setText("Please Select Or Click The Monument Image");
         cardView.setOnClickListener(this);
         trackLocationImage.setOnClickListener(this);
+
+
+
     }
+
+    //                         long    78.042073     lat 27.174698469698683
+
 
     @Override
     public void onClick(View view) {
@@ -133,9 +139,13 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                            Uri.parse(trackLocationUrl));
-                    startActivity(intent);
+//                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                            Uri.parse(trackLocationUrl));
+//                    startActivity(intent);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+destinationMonumentName+",+India");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
                 }
             }, 1000);
 
@@ -246,6 +256,8 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              String query="daddr="+String.valueOf(loc.getLatitude())+","+String.valueOf(loc.getLongitude())+"("+
                                      landmarkName+")";
 
+                             Log.i("GAT", "longitude : "+loc.getLongitude()+" ,latitude : "+loc.getLatitude());
+
                              trackLocationUrl=base_url+query;
                              trackLocationImage.setVisibility(View.VISIBLE);
                              bottomCardView.setVisibility(View.VISIBLE);
@@ -256,6 +268,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              }
                              else{
                                  monumentDetails.setText(builder.toString());
+                                 destinationMonumentName=builder.toString();
                              }
                              progressBar.setVisibility(View.GONE);
 
