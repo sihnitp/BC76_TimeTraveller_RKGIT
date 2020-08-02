@@ -611,10 +611,9 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
 
             String suggestion = inputEditText.getText().toString();
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("suggestion");
-            String uid = FirebaseAuth.getInstance().getUid();
+            String key=reference.push().getKey();
 
-            if(uid!=null) {
-                reference.child(uid).setValue(suggestion).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.child(key).setValue(suggestion).addOnCompleteListener(new OnCompleteListener<Void>(){
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         progressDialog.dismiss();
@@ -628,12 +627,7 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
                         Snackbar.make(rootLayout, "Error occured,try again after some time ", Snackbar.LENGTH_SHORT).show();
                     }
                 });
-            }
 
-            else{
-                Snackbar.make(rootLayout, "Please sign in first",Snackbar.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
         }
         else if(view.getId()==R.id.need_guide){
             Intent intent=new Intent(ExploreActivity.this,GuideListActivity.class);
