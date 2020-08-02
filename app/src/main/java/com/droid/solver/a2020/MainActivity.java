@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -147,10 +148,17 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 showMessage("In devlopment mode");
                 break;
             case R.id.translate:
+
                 popupMenu.show();
+//                SharedPreferences sf=getSharedPreferences(MainActivity.preferenceName, MODE_PRIVATE);
+//                int lanInd=sf.getInt(MainActivity.lan, 1);
+//
+//                popupMenu.getMenu().getItem(lanInd).setChecked(true);
+
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
+
                         SharedPreferences.Editor editor=preferences.edit();//false for english
                         switch (menuItem.getItemId()){
                             case R.id.bengali:
