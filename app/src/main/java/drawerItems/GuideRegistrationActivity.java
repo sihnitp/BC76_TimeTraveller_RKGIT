@@ -85,8 +85,7 @@ public class GuideRegistrationActivity extends AppCompatActivity implements View
                 name.setError("Please Enter name");
                 return;
             }
-            if(mobile.getText()==null || mobile.getText().toString().length()==0 &&
-                    !(mobile.getText().toString().length()==10 || mobile.getText().toString().length()==12)) {
+            if(mobile.getText()==null || !isValidMobile(mobile.getText().toString())) {
                 mobileLayout.setErrorEnabled(true);
                 mobile.setError("Please Enter valid mobile no");
                 return;
@@ -124,6 +123,9 @@ public class GuideRegistrationActivity extends AppCompatActivity implements View
             uploadAadharToStorage(mname,mmobile,memail,mqualification,mstate,mdistrict,mcharge,mdetails);
 
         }
+    }
+    private boolean isValidMobile(String phone) {
+        return android.util.Patterns.PHONE.matcher(phone).matches();
     }
 
     private void showFileChooser() {
