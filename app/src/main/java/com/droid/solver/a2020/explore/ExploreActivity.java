@@ -22,6 +22,7 @@ import com.droid.solver.a2020.DetailActivity;
 import com.droid.solver.a2020.MainActivity;
 import com.droid.solver.a2020.PhysicalArtifactsModel;
 import com.droid.solver.a2020.R;
+import com.droid.solver.a2020.explorefragment.GuideListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -635,7 +636,9 @@ public class ExploreActivity extends AppCompatActivity implements TextToSpeech.O
             }
         }
         else if(view.getId()==R.id.need_guide){
-
+            Intent intent=new Intent(ExploreActivity.this,GuideListActivity.class);
+            intent.putExtra("city", cityName);
+            startActivity(intent);
         }
 
 
