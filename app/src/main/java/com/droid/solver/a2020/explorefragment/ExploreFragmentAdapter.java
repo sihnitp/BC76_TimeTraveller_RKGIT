@@ -37,7 +37,7 @@ public class ExploreFragmentAdapter extends RecyclerView .Adapter{
         if(holder instanceof ExploreFragmentViewHolder){
 
             ((ExploreFragmentViewHolder) holder).stateTitle.setText(stateArray[position]);
-            Picasso.get().load(CONSTANT.image[position]).into(((ExploreFragmentViewHolder) holder).imageView);
+            Picasso.get().load(CONSTANT.image[position%30]).into(((ExploreFragmentViewHolder) holder).imageView);
 
             ((ExploreFragmentViewHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
