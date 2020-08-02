@@ -36,11 +36,12 @@ public class LoginActivity extends AppCompatActivity {
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                 new AuthUI.IdpConfig.FacebookBuilder().build());
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
         FirebaseAuth auth=FirebaseAuth.getInstance();
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
-            startActivity(new Intent(this,MainActivity.class));
-            finish();
+            //go to mainActivity
         }
         else {
             startActivityForResult(

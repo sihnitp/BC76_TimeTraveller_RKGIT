@@ -23,7 +23,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.share:
-                showMessage("Share");
+                showMessage("In devlopment mode");
                 break;
             case R.id.translate:
                 popupMenu.show();
@@ -192,13 +195,12 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     }
 
     private void showMessage(String s){
-//        Snackbar.make(coordinatorLayout, s+" is clicked" ,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, s+" is clicked" ,Snackbar.LENGTH_SHORT).show();
     }
 
     public void addCityToList() {
 
         List<String[]> cityArrayList=new ArrayList<>();
-
         String[] andhra = new String[]{"amravati", "visakhapatnam", "vijayawada", "tirupati", "guntur"};
         String[] arunachal = new String[]{"tawang", "itanagar", "zero", "bomdila", "pasighat"};
         String[] assam = new String[]{"guwahati", "silchar", "dibrugarh", "jorhat", "nagaon"};
@@ -280,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
 
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
