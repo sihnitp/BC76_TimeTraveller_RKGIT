@@ -21,7 +21,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".explorefragment.GuideListActivity"></activity>
+        <activity android:name=".explorefragment.GuideListActivity" ></activity>
         <activity android:name="drawerItems.GuideRegistrationActivity" />
         <activity android:name="drawerItems.WebViewActivity" />
         <activity android:name=".GovernmentSchemeActivity" />
