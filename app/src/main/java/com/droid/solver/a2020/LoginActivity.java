@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 new AuthUI.IdpConfig.FacebookBuilder().build());
         startActivity(new Intent(this,MainActivity.class));
         finish();
+
         FirebaseAuth auth=FirebaseAuth.getInstance();
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
