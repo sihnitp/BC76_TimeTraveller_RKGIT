@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -21,10 +22,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -62,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         preferences=this.getSharedPreferences(preferenceName,MODE_PRIVATE);
         invalidateOptionsMenu();
     }
+
+
+
 
     @Override
     public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
@@ -147,10 +156,17 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 showMessage("In devlopment mode");
                 break;
             case R.id.translate:
+
                 popupMenu.show();
+//                SharedPreferences sf=getSharedPreferences(MainActivity.preferenceName, MODE_PRIVATE);
+//                int lanInd=sf.getInt(MainActivity.lan, 1);
+//
+//                popupMenu.getMenu().getItem(lanInd).setChecked(true);
+
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
+
                         SharedPreferences.Editor editor=preferences.edit();//false for english
                         switch (menuItem.getItemId()){
                             case R.id.bengali:

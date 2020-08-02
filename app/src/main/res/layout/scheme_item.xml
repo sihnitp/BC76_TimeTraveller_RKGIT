@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     android:id="@+id/card_view"
     android:elevation="5dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="5dp"
     android:layout_marginStart="8dp"
     android:foreground="?android:selectableItemBackground"
     android:clickable="true"
@@ -21,7 +21,10 @@
         tools:text="Scheme of financial assistance under seva bhojan yojna"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         android:gravity="center"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
         android:layout_height="match_parent"/>
 
 </androidx.cardview.widget.CardView>
