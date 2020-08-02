@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <uses-feature android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
@@ -22,6 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".explorefragment.GuideListActivity" ></activity>
+        <activity android:name="drawerItems.QuizActivity"></activity>
         <activity android:name="drawerItems.GuideRegistrationActivity" />
         <activity android:name="drawerItems.WebViewActivity" />
         <activity android:name=".GovernmentSchemeActivity" />
@@ -44,13 +47,12 @@
             android:name=".AddPlacesActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".explore.ExploreActivity" />
-        <activity android:name=".LoginActivity">
-        </activity>
-
-        <activity android:name=".MainActivity" >
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

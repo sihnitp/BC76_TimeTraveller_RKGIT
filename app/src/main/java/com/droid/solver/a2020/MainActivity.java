@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import drawerItems.GuideRegistrationActivity;
+import drawerItems.QuizActivity;
 import drawerItems.WebViewActivity;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     }
 
     private void showMessage(String s){
-        Snackbar.make(coordinatorLayout, s+" is clicked" ,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, s ,Snackbar.LENGTH_SHORT).show();
     }
 
     public void addCityToList() {
@@ -309,6 +310,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 break;
             case R.id.sixth:
                 startActivity(new Intent(MainActivity.this, GuideRegistrationActivity.class));
+                break;
+            case R.id.seventh:
+                startActivity(new Intent(MainActivity.this, QuizActivity.class));
                 break;
             default :
                 return true;
