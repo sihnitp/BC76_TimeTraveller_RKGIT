@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class ExploreFragment extends Fragment implements  View.OnClickListener{
 
@@ -37,7 +38,7 @@ public class ExploreFragment extends Fragment implements  View.OnClickListener{
     private MaterialButton button;
     private FusedLocationProviderClient locationProviderClient;
     private String[] state;
-    private EditText inputText;
+    private TextInputEditText inputText;
     public static ExploreFragment getInstance(){
         return new ExploreFragment();
     }
