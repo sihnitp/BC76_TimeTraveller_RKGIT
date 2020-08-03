@@ -48,6 +48,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -214,6 +220,31 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
+    public String removeBracket(String strin){
+        int cnt=0;
+        String newSting="";
+        for(int i=0;i<strin.length();i++){
+            if (strin.charAt(i)=='\\'){
+                if (strin.charAt(i+1)=='n'){
+                    i++;
+                }
+                else if (strin.charAt(i+1)=='u'){
+                    newSting+=" ";
+                    i+=5;
+                }
+            }
+            else if ((cnt==0) && (strin.charAt(i)!='(')){
+                newSting+=strin.charAt(i);
+            }
+            else if (strin.charAt(i)=='('){
+                cnt+=1;
+            }
+            else if (strin.charAt(i)==')'){
+                cnt-=1;
+            }
+        }
+        return  newSting;
+    }
 
     private void processImage(Uri uri){
         Log.i("TAG", "bitmap processing");
@@ -246,7 +277,48 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              }
 
                              String landmarkName = landmark.getLandmark();
-                             int cnt=0;
+                             final String titl = landmarkName;
+                             indicator.setText(titl);
+                             RequestQueue queue = Volley.newRequestQueue(getContext());
+                             //String url ="https://en.wikipedia.org/w/api.php?action=opensearch&search=laptop&limit=2&format=json";
+                             String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=1&titles="+titl;
+                             //String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Wikipedia&format=json&exintro=1";
+                             //indicator.setText(url);
+                             // Request a string response from the provided URL.
+                             try {
+                                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                                         new Response.Listener<String>() {
+                                             @Override
+                                             public void onResponse(String response) {
+                                                 final String title_string = "<b>" + titl + "</b>";
+                                                 int startIndex = response.toString().lastIndexOf(title_string);
+
+                                                 // Display the first 500 characters of the response string.
+                                                 if (startIndex > 0) {
+                                                     response = response.toString().substring(startIndex);
+                                                     response = response.replaceAll("\\<.*?\\>", "");
+                                                     //response=response.replaceAll("\\(.*?\\)","");
+                                                     response = removeBracket(response);
+                                                     response = response.replaceAll("\\n", "");
+                                                     indicator.setText("Here is the detailed info:\n" + response.toString().substring(0, Math.min(1000, response.length() - 2)));
+                                                 } else {
+                                                     indicator.setText("Here is the detailed info:\n");
+                                                 }
+                                             }
+                                         }, new Response.ErrorListener() {
+                                     @Override
+                                     public void onErrorResponse(VolleyError error) {
+                                         indicator.setText("Here is the detailed info:\n");
+                                     }
+                                 });
+
+// Add the request to the RequestQueue.
+                                 queue.add(stringRequest);
+                             }
+                             catch (Exception e){
+                                 indicator.setText("This is "+landmarkName);
+                             }
+
                              builder.append(landmarkName);
                              builder.append("\n");
                              count++;
@@ -262,7 +334,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
                              trackLocationImage.setVisibility(View.VISIBLE);
                              bottomCardView.setVisibility(View.VISIBLE);
 
-                             indicator.setText("Here's the detailed info!");
+                             //indicator.setText("Here's the detailed info!");
                              if(builder.toString().length()==0){
                                  monumentDetails.setText("Not Found");
                              }
