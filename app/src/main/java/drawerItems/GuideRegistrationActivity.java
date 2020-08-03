@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.droid.solver.a2020.R;
-import com.droid.solver.a2020.explorefragment.GuideListActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
