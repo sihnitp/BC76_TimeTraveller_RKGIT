@@ -2,45 +2,25 @@ package com.droid.solver.a2020;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -63,32 +43,20 @@ import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions;
 import com.google.firebase.ml.vision.cloud.landmark.FirebaseVisionCloudLandmark;
 import com.google.firebase.ml.vision.cloud.landmark.FirebaseVisionCloudLandmarkDetector;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 import com.google.firebase.ml.vision.common.FirebaseVisionLatLng;
-import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.PrivateKey;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.CAMERA_SERVICE;
 
 public class CaptureFragment extends Fragment implements View.OnClickListener {
 
     private static final int PICK_IMAGE = 51;
     private CardView cardView,bottomCardView;
     String currentPhotoPath;
-    private TextView monumentDetails,indicator;
+    private TextView monumentDetails,indicator,description;
     private ImageView imageView;
     private static final int CAMERA_PERMISSION_CODE=13;
     private static final int REQUEST_IMAGE_CAPTURE=14;
@@ -115,6 +83,7 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
         cardView=view.findViewById(R.id.cardView);
         monumentDetails=view.findViewById(R.id.textShown);
         imageView=view.findViewById(R.id.image);
+        description=view.findViewById(R.id.description);
         trackLocationImage=view.findViewById(R.id.track_location);
         indicator=view.findViewById(R.id.details);
         bottomCardView=view.findViewById(R.id.cardView2);
@@ -123,9 +92,9 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
         progressBar.setVisibility(View.GONE);
         trackLocationImage.setVisibility(View.INVISIBLE);
         progressDialog=new ProgressDialog(getActivity());
-        indicator.setText("Please Select Or Click The Monument Image");
         cardView.setOnClickListener(this);
         trackLocationImage.setOnClickListener(this);
+        indicator.setText("Please Select Monument Image");
 
 
 
@@ -278,46 +247,44 @@ public class CaptureFragment extends Fragment implements View.OnClickListener {
 
                              String landmarkName = landmark.getLandmark();
                              final String titl = landmarkName;
-                             indicator.setText(titl);
-                             RequestQueue queue = Volley.newRequestQueue(getContext());
-                             //String url ="https://en.wikipedia.org/w/api.php?action=opensearch&search=laptop&limit=2&format=json";
-                             String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=1&titles="+titl;
-                             //String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Wikipedia&format=json&exintro=1";
-                             //indicator.setText(url);
-                             // Request a string response from the provided URL.
+                             indicator.setText("Here's is the detailed info");
+
+                             RequestQueue queue = Volley.newRequestQueue(getActivity());
+                             final String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=1&titles="+titl;
                              try {
                                  StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                                          new Response.Listener<String>() {
                                              @Override
                                              public void onResponse(String response) {
+                                                 if(response==null)response="";
                                                  final String title_string = "<b>" + titl + "</b>";
-                                                 int startIndex = response.toString().lastIndexOf(title_string);
-
-                                                 // Display the first 500 characters of the response string.
+                                                 int startIndex = response.lastIndexOf(title_string);
                                                  if (startIndex > 0) {
-                                                     response = response.toString().substring(startIndex);
+                                                     response = response.substring(startIndex);
                                                      response = response.replaceAll("\\<.*?\\>", "");
-                                                     //response=response.replaceAll("\\(.*?\\)","");
                                                      response = removeBracket(response);
                                                      response = response.replaceAll("\\n", "");
-                                                     indicator.setText("Here is the detailed info:\n" + response.toString().substring(0, Math.min(1000, response.length() - 2)));
-                                                 } else {
-                                                     indicator.setText("Here is the detailed info:\n");
+                                                     response=response.replaceAll(" +", " ");
+                                                     description.setText(response.substring(0, Math.min(1000, response.length() - 2)));
                                                  }
                                              }
                                          }, new Response.ErrorListener() {
                                      @Override
                                      public void onErrorResponse(VolleyError error) {
-                                         indicator.setText("Here is the detailed info:\n");
+                                         description.setText("Facing some issue in retrieving data");
                                      }
                                  });
-
-// Add the request to the RequestQueue.
                                  queue.add(stringRequest);
                              }
                              catch (Exception e){
-                                 indicator.setText("This is "+landmarkName);
+                                 description.setText("Facing some issue in retrieving data");
+
                              }
+
+
+
+
+
 
                              builder.append(landmarkName);
                              builder.append("\n");
